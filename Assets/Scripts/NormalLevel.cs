@@ -4,11 +4,12 @@ using UnityEngine;
 
 public class NormalLevel : MonoBehaviour {
 
-    public UnityStandardAssets.Characters.ThirdPerson.AICharacterControl[] Wave1Enemies = new UnityStandardAssets.Characters.ThirdPerson.AICharacterControl[2];
-    GameObject[] Wave2Enemies = new GameObject[2];
-    GameObject[] Wave3Enemies = new GameObject[2];
+    public GameObject[] Wave1Enemies = new GameObject[4];
+   // GameObject[] Wave2Enemies = new GameObject[2];
+    //GameObject[] Wave3Enemies = new GameObject[2];
 
     public GameObject kratos;
+ 
     // Use this for initialization
     void Start () {
 		
@@ -16,8 +17,20 @@ public class NormalLevel : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+        if (kratos.GetComponent<KratusControl>().enemyAttackers < 4)
+        {
+            if (kratos.GetComponentInChildren<WeaponAttack>().instNextEnemy)
+            {
+                GameObject fire = GameObject.FindGameObjectWithTag("fire");
+                fire.transform.position = Wave1Enemies[kratos.GetComponent<KratusControl>().enemyAttackers].GetComponent< UnityStandardAssets.Characters.ThirdPerson.AICharacterControl>().transform.position;
+                Wave1Enemies[kratos.GetComponent<KratusControl>().enemyAttackers].SetActive(true);
+                fire.GetComponent<ParticleSystem>().Play();
+                kratos.GetComponentInChildren<WeaponAttack>().instNextEnemy = false;
 
-        Wave1Enemies[kratos.GetComponent<KratusControl>().enemyAttackers].target = kratos.transform;
+
+            }
+            Wave1Enemies[kratos.GetComponent<KratusControl>().enemyAttackers].GetComponent<UnityStandardAssets.Characters.ThirdPerson.AICharacterControl>().target = kratos.transform;
+        }
         
 
 

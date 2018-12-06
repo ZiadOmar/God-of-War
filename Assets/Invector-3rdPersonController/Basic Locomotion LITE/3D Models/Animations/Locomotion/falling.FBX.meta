@@ -330,7 +330,7 @@ ModelImporter:
       name: Falling
       takeName: Take 001
       firstFrame: 3.9000003
-      lastFrame: 21.5
+      lastFrame: 21.1
       wrapMode: 0
       orientationOffsetY: 0
       level: 0

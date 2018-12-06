@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: b5119c58cbcd68942ac63bd05ec561f4
+labels:
+- Ground
+- Pattern
+- Rock
+- Stone
+- Terrain
+- Wall
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

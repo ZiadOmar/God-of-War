@@ -9,6 +9,10 @@ TagManager:
   - HealthChest
   - Camera
   - Boss
+  - Plane
+  - arrow
+  - fire
+  - handoferika
   layers:
   - Default
   - TransparentFX

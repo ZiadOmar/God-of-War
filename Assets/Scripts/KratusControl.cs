@@ -18,30 +18,44 @@ public class KratusControl : MonoBehaviour {
     double KratosHeavyAttackDamage = 30;
 
     //Attacks
+    public Avatar DefaultAvatar;
+
     public bool lightAttack = false;
+    public Avatar LightAttackAvatar;
+
     public bool heavyAttack = false;
+    public Avatar HeavyAttackAvatar;
 
     public bool rage = false;
+    public Avatar RageAvatar;
+
     public bool blocking = false;
+    public Avatar BlockingAvatar;
 
-
+    // GameScreen
     public bool GameScreenOn;
 
-    //Normal Level
-    public int enemyAttackers =0;
+    //Weapons
+    public GameObject Axe;
+    public GameObject Sword;
 
-    //Boss Level
-    public GameObject Boss;
+    //Normal Level
+    public int enemyAttackers = 0;
+
+    ////Boss Level
+    //public GameObject Boss;
 
     // Use this for initialization
     void Start()
     {
+        Sword.SetActive(true);
+        Axe.SetActive(false);
     }
 
     // Update is called once per frame
     void Update()
     {
-        //Debug.Log("V= " + this.GetComponent<Rigidbody>().velocity);
+       
         if (GameScreenOn)
         {
         if (Input.GetMouseButtonDown(0))
@@ -57,12 +71,17 @@ public class KratusControl : MonoBehaviour {
             BlockingActivated();
         }
 
-    
-    }
+        if (Input.GetKeyUp(KeyCode.LeftControl))
+        {
+            blocking = false;
+            if (!blocking)
+                StartCoroutine("WaitAWhile");
+        }
+ }
 
     //Enemy Killed  >>>>   XPIncAndCheckForLevelUp();
 
-    void XPIncAndCheckForLevelUp()
+    public void XPIncAndCheckForLevelUp()
     {
         KratosXP += 50;
 
@@ -92,196 +111,58 @@ public class KratusControl : MonoBehaviour {
             KratosHealthPoints = MaxHealthPoints;
         }
     }
-    private void OnCollisionStay(Collision other)
-    {   
-        // if kratos hit an enemy
-        if (other.gameObject.CompareTag("Enemy") && (lightAttack || heavyAttack))
-        {
-            double enemyHealthPoints = other.gameObject.GetComponent<Enemy>().EnemyHealthPoints;
-            if (rage)
-            {
-                enemyHealthPoints -= KratosDamagePoints*2;
-                rage = false;
-            }
-            else
-            {
-                enemyHealthPoints -= KratosDamagePoints;
-            }
 
-
-            if (enemyHealthPoints <= 0)
-            {
-                Destroy(other.gameObject); // Animation Dying
-                XPIncAndCheckForLevelUp();
-                enemyAttackers++;
-            }
-            
-            KratosRageLevel++;
-            other.gameObject.GetComponent<Enemy>().EnemyHealthPoints = enemyHealthPoints;
-            lightAttack = false;
-            heavyAttack = false;
-
-        }
-
-        // if kratos hit the Boss (Not a weak Point)
-        if (other.gameObject.CompareTag("Boss") && (lightAttack || heavyAttack))
-        {
-            double BossHealthPoints = Boss.GetComponent<BossLevel>().BossHealthPoints;
-            if (rage)
-            {
-                BossHealthPoints -= (BossHealthPoints * 0.05)*2;
-                rage = false;
-            }
-            else
-            {
-                BossHealthPoints -= (BossHealthPoints * 0.05);
-            }
-
-
-            if (BossHealthPoints <= 0)
-            {
-                Destroy(Boss); //Animation Dying
-                //Credits Roll
-            }
-
-            KratosRageLevel++;
-            Boss.GetComponent<BossLevel>().BossHealthPoints = BossHealthPoints;
-            lightAttack = false;
-            heavyAttack = false;
-
-        }
-
-        // if kratos hit the Boss (weak Point 1)
-        if (other.gameObject.CompareTag("BossWeakPoint1") && (lightAttack || heavyAttack))
-        {
-            int WeakPoint1 = Boss.GetComponent<BossLevel>().WeakPoint1; 
-            double BossHealthPoints = Boss.GetComponent<BossLevel>().BossHealthPoints;
-            if (rage)
-            {
-                BossHealthPoints -= ((BossHealthPoints * 0.2) * 2);
-                rage = false;
-            }
-            else
-            {
-                BossHealthPoints -= (BossHealthPoints * 0.2);
-            }
-
-            WeakPoint1++;
-            if (WeakPoint1 == 3)
-            {
-                Destroy(other.gameObject);
-                // Stunning
-            }
-
-            if (BossHealthPoints <= 0)
-            {
-                Destroy(Boss); //Animation Dying
-                //Credits Roll
-            }
-
-            KratosRageLevel++;
-            other.gameObject.GetComponent<BossLevel>().BossHealthPoints = BossHealthPoints;
-            lightAttack = false;
-            heavyAttack = false;
-
-        }
-
-        // if kratos hit the Boss (weak Point 2)
-        if (other.gameObject.CompareTag("BossWeakPoint2") && (lightAttack || heavyAttack))
-        {
-            int WeakPoint2 = Boss.GetComponent<BossLevel>().WeakPoint2;
-            double BossHealthPoints = Boss.GetComponent<BossLevel>().BossHealthPoints;
-            if (rage)
-            {
-                BossHealthPoints -= ((BossHealthPoints * 0.2) * 2);
-                rage = false;
-            }
-            else
-            {
-                BossHealthPoints -= (BossHealthPoints * 0.2);
-            }
-
-            WeakPoint2++;
-            if (WeakPoint2 == 3)
-            {
-                Destroy(other.gameObject);
-                // Stunning
-            }
-
-            if (BossHealthPoints <= 0)
-            {
-                Destroy(Boss); //Animation Dying
-                //Credits Roll
-            }
-
-            KratosRageLevel++;
-            Boss.GetComponent<BossLevel>().BossHealthPoints = BossHealthPoints;
-            lightAttack = false;
-            heavyAttack = false;
-
-        }
-
-        // if kratos hit the Boss (weak Point 3)
-        if (other.gameObject.CompareTag("BossWeakPoint3") && (lightAttack || heavyAttack))
-        {
-            int WeakPoint3 = Boss.GetComponent<BossLevel>().WeakPoint3;
-            double BossHealthPoints = Boss.GetComponent<BossLevel>().BossHealthPoints;
-            if (rage)
-            {
-                BossHealthPoints -= ((BossHealthPoints * 0.2) * 2);
-                rage = false;
-            }
-            else
-            {
-                BossHealthPoints -= (BossHealthPoints * 0.2);
-            }
-
-            WeakPoint3++;
-            if (WeakPoint3 == 3)
-            {
-                Destroy(other.gameObject);
-                // Remove this attack
-                // Stunning
-            }
-
-            if (BossHealthPoints <= 0)
-            {
-                Destroy(Boss); //Animation Dying
-                //Credits Roll
-            }
-
-            KratosRageLevel++;
-            Boss.GetComponent<BossLevel>().BossHealthPoints = BossHealthPoints;
-            lightAttack = false;
-            heavyAttack = false;
-        }
-    }
 
     private void LightAttackActivated()
     {
         lightAttack = true;
+        Sword.SetActive(true);
+        Axe.SetActive(false);
+        this.GetComponent<Animator>().avatar = LightAttackAvatar;
+        this.GetComponent<Animator>().CrossFadeInFixedTime("LightAttack", 0.05f);
+
         Debug.Log("lightAttack");
-        KratosDamagePoints = KratosLightAttackDamage;      
+        KratosDamagePoints = KratosLightAttackDamage;
+
+        StartCoroutine("WaitAWhile");
     }
 
     private void HeavyAttackActivated()
     {
         heavyAttack = true;
+        Sword.SetActive(false);
+        Axe.SetActive(true);
+        this.GetComponent<Animator>().avatar = HeavyAttackAvatar;
+        this.GetComponent<Animator>().CrossFadeInFixedTime("HeavyAttack", 0.05f);
+  
         Debug.Log("heavyAttack");
         KratosDamagePoints = KratosHeavyAttackDamage;
+
+        StartCoroutine("WaitAWhile");
     }
 
     private void RageActivated()
     {
         rage = true;
+        this.GetComponent<Animator>().avatar = RageAvatar;
+        this.GetComponent<Animator>().CrossFadeInFixedTime("Rage", 0.05f);
+
         Debug.Log("Rageeeee");
         KratosRageLevel = 0;
+
+        StartCoroutine("WaitAWhile");
     }
 
     private void BlockingActivated()  // ##########
     {
         blocking = true;
+        Sword.SetActive(false);
+        Axe.SetActive(false);
+        this.GetComponent<Animator>().avatar = BlockingAvatar;
+        this.GetComponent<Animator>().CrossFadeInFixedTime("Blocking", 0.05f);
+
         Debug.Log("blocking");
+       
     }
 
 
@@ -331,12 +212,13 @@ public class KratusControl : MonoBehaviour {
     //    StartCoroutine("WaitAWhile");
     //}
 
-    //IEnumerator WaitAWhile()
-    //{
-    //    yield return new WaitForSecondsRealtime(2f);
-    //    Door.GetComponent<AudioSource>().outputAudioMixerGroup.audioMixer.SetFloat("MasterVol", -80f);
-    //    Door.GetComponent<AudioSource>().outputAudioMixerGroup.audioMixer.SetFloat("DoorVol", -80f);
-    //}
+    IEnumerator WaitAWhile()
+    {
+        yield return new WaitForSecondsRealtime(2f);
+        this.GetComponent<Animator>().avatar = DefaultAvatar;
+        lightAttack = false;
+        heavyAttack = false;
+    }
 
 
 
