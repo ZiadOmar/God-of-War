@@ -41,8 +41,8 @@ public class Enemy : MonoBehaviour {
                     this.gameObject.GetComponent<Animator>().SetTrigger("attack");
                 
                 print("attack");
-
-                if (!FightDone)
+      
+                if (!FightDone && !other.gameObject.GetComponent<KratusControl>().blocking)
                 {
                     KratosHealthPoints -= 10;
                     other.gameObject.GetComponent<Animator>().avatar = other.gameObject.GetComponent<KratusControl>().HitReactionAvatar;
@@ -84,7 +84,7 @@ public class Enemy : MonoBehaviour {
                     hand.GetComponent<Erika>().enabled = true;
 
 
-                    if (!FightDone)
+                    if (!FightDone && !other.gameObject.GetComponent<KratusControl>().blocking)
                     {
                         KratosHealthPoints -= 10;
                         other.gameObject.GetComponent<Animator>().avatar = other.gameObject.GetComponent<KratusControl>().HitReactionAvatar;

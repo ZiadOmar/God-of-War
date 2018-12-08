@@ -162,11 +162,11 @@ public class KratusControl : MonoBehaviour {
         StartCoroutine("WaitAWhile");
     }
 
-    private void BlockingActivated()  // ##########
+    private void BlockingActivated() 
     {
         blocking = true;
-        Sword.SetActive(false);
-        Axe.SetActive(false);
+        //Sword.SetActive(false);
+        //Axe.SetActive(false);
         this.GetComponent<Animator>().avatar = BlockingAvatar;
         this.GetComponent<Animator>().CrossFadeInFixedTime("Blocking", 0.05f);
 

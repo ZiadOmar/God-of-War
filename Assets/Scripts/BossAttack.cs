@@ -24,7 +24,7 @@ public class BossAttack : MonoBehaviour {
       {
         double KratosHealthPoints = other.gameObject.GetComponent<KratusControl>().KratosHealthPoints;
 
-            if (!FightDone)
+            if (!FightDone && !other.gameObject.GetComponent<KratusControl>().blocking)
             {
                 KratosHealthPoints -= 10;
                 other.gameObject.GetComponent<Animator>().avatar = other.gameObject.GetComponent<KratusControl>().HitReactionAvatar;
