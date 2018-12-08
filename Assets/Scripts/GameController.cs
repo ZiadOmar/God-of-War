@@ -64,6 +64,19 @@ public class GameController : MonoBehaviour {
         KratosXP.text = "XP: " + Player.GetComponent<KratusControl>().KratosXP;
         KratosSkillPoints.text = "Skill Points: " + Player.GetComponent<KratusControl>().KratosSkillPoints;
         UpgradeKratosSkillPoints.text = "Skill Points: " + Player.GetComponent<KratusControl>().KratosSkillPoints;
+
+        if (Player.GetComponent<KratusControl>().BossDefeated)
+            Credits();
+
+        if (Player.GetComponent<KratusControl>().GameOver)
+        {
+            GameOverScreen.SetActive(true);
+            GameScreen.SetActive(false);
+            Player.GetComponent<KratusControl>().GameScreenOn = false;
+            Player.GetComponent<KratusControl>().GameOver = false;
+        }
+
+
     }
 
     public void StartGame()
@@ -76,7 +89,9 @@ public class GameController : MonoBehaviour {
         Player.GetComponent<Invector.CharacterController.vThirdPersonController>().enabled = true;
         Player.GetComponent<Invector.CharacterController.vThirdPersonInput>().enabled = true;
         Player.transform.position = initialPosition;
+
         Player.GetComponent<KratusControl>().GameScreenOn = true;
+        Player.GetComponent<KratusControl>().NormalLevel.SetActive(true);
 
     }
 
@@ -138,6 +153,7 @@ public class GameController : MonoBehaviour {
     public void Credits()
     {
         MainMenu.SetActive(false);
+        GameScreen.SetActive(false);
         Options.SetActive(false);
         CreditsMenu.SetActive(true);
     }

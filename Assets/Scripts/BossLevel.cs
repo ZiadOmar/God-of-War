@@ -6,8 +6,9 @@ using UnityEngine.AI;
 public class BossLevel : MonoBehaviour {
 
     public double BossHealthPoints = 200;
+    public double BossMaxHealthPoints = 200;
 
-    public bool[] BossAttacks = new bool[3];
+    //public bool[] BossAttacks = new bool[3];
     float timer = 0.0f;
     int seconds;
 
@@ -37,17 +38,17 @@ public class BossLevel : MonoBehaviour {
         remainingDistance = this.gameObject.GetComponent<NavMeshAgent>().remainingDistance;
         // 5 Seconds Time
         timer += Time.deltaTime;
-      seconds = System.Convert.ToInt32(timer % 60);
+        seconds = System.Convert.ToInt32(timer % 60);
         if (seconds == 5)
         {
             timer = 0.0f;
             attack = true;
             Debug.Log("5 seconds passed");
 
-            for(int attackIndex = 0; attackIndex < 3; attackIndex++)
-            {
-                BossAttacks[attackIndex] = false;
-            }
+            //for(int attackIndex = 0; attackIndex < 3; attackIndex++)
+            //{
+            //    BossAttacks[attackIndex] = false;
+            //}
             // Choose Attack Randomly
             RandomAttack = (int)Random.Range(0.0f, 3.0f);
 

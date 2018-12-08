@@ -19,6 +19,7 @@ public class KratusControl : MonoBehaviour {
 
     //Attacks
     public Avatar DefaultAvatar;
+    public Avatar HitReactionAvatar;
 
     public bool lightAttack = false;
     public Avatar LightAttackAvatar;
@@ -40,10 +41,16 @@ public class KratusControl : MonoBehaviour {
     public GameObject Sword;
 
     //Normal Level
+    public GameObject NormalLevel;
     public int enemyAttackers = 0;
 
-    ////Boss Level
-    //public GameObject Boss;
+    //Boss Level
+    public GameObject BossLevel;
+    public GameObject Boss;
+    public bool BossDefeated;
+
+    public bool GameOver;
+    public Avatar DyingAvatar;
 
     // Use this for initialization
     void Start()
@@ -77,6 +84,8 @@ public class KratusControl : MonoBehaviour {
             if (!blocking)
                 StartCoroutine("WaitAWhile");
         }
+
+    
  }
 
     //Enemy Killed  >>>>   XPIncAndCheckForLevelUp();
@@ -211,6 +220,10 @@ public class KratusControl : MonoBehaviour {
     //    Door.GetComponent<AudioSource>().Play();
     //    StartCoroutine("WaitAWhile");
     //}
+    public void ReturnToDefaultAvatar()
+    {
+        StartCoroutine("WaitAWhile");
+    }
 
     IEnumerator WaitAWhile()
     {

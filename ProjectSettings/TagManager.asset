@@ -13,6 +13,9 @@ TagManager:
   - arrow
   - fire
   - handoferika
+  - BossWeakPoint2
+  - BossWeakPoint3
+  - BossWeakPoint1
   layers:
   - Default
   - TransparentFX

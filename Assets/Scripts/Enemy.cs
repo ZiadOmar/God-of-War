@@ -6,13 +6,12 @@ using UnityEngine.AI;
 public class Enemy : MonoBehaviour {
 
     public double EnemyHealthPoints = 50;
-    bool die;
+    bool FightDone;
     bool Attack;
     public string type;
     int i = 0;
     GameObject hand;
-   
-
+  
     // Use this for initialization
     void Start () {
         hand = GameObject.FindGameObjectWithTag("handoferika");
@@ -43,12 +42,22 @@ public class Enemy : MonoBehaviour {
                 
                 print("attack");
 
+                if (!FightDone)
+                {
+                    KratosHealthPoints -= 10;
+                    other.gameObject.GetComponent<Animator>().avatar = other.gameObject.GetComponent<KratusControl>().HitReactionAvatar;
+                    other.gameObject.GetComponent<Animator>().CrossFadeInFixedTime("Hit Reaction", 0.05f);
+                    other.gameObject.GetComponent<KratusControl>().ReturnToDefaultAvatar();
+                }
                 if (KratosHealthPoints <= 0)
                 {
                     //GameOver
+                    other.gameObject.GetComponent<KratusControl>().GameOver = true;
+                    other.gameObject.GetComponent<Animator>().avatar = other.gameObject.GetComponent<KratusControl>().DyingAvatar;
+                    other.gameObject.GetComponent<Animator>().CrossFadeInFixedTime("Dying", 0.05f);
+
+                    FightDone = true;
                 }
-                else
-                    KratosHealthPoints -= 10;
 
                 other.gameObject.GetComponent<KratusControl>().KratosHealthPoints = KratosHealthPoints;
             }
@@ -73,12 +82,24 @@ public class Enemy : MonoBehaviour {
                 {
                     this.gameObject.GetComponent<Animator>().SetTrigger("shoot");
                     hand.GetComponent<Erika>().enabled = true;
+
+
+                    if (!FightDone)
+                    {
+                        KratosHealthPoints -= 10;
+                        other.gameObject.GetComponent<Animator>().avatar = other.gameObject.GetComponent<KratusControl>().HitReactionAvatar;
+                        other.gameObject.GetComponent<Animator>().CrossFadeInFixedTime("Hit Reaction", 0.05f);
+                        other.gameObject.GetComponent<KratusControl>().ReturnToDefaultAvatar();
+                    }
                     if (KratosHealthPoints <= 0)
                     {
                         //GameOver
+                        other.gameObject.GetComponent<KratusControl>().GameOver = true;
+                        other.gameObject.GetComponent<Animator>().avatar = other.gameObject.GetComponent<KratusControl>().DyingAvatar;
+                        other.gameObject.GetComponent<Animator>().CrossFadeInFixedTime("Dying", 0.05f);
+
+                        FightDone = true;
                     }
-                    else
-                        KratosHealthPoints -= 10;
 
                     other.gameObject.GetComponent<KratusControl>().KratosHealthPoints = KratosHealthPoints;
 
