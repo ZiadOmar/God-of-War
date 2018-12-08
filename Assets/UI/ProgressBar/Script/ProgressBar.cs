@@ -8,6 +8,7 @@ using UnityEngine.UI;
 
 public class ProgressBar : MonoBehaviour
 {
+    public int MaxValue; //Ziad
 
     [Header("Title Setting")]
     public string Title;
@@ -39,7 +40,7 @@ public class ProgressBar : MonoBehaviour
 
         set
         {
-            value = Mathf.Clamp(value, 0, 100);
+            value = Mathf.Clamp(value, 0, MaxValue); //Ziad
             barValue = value;
             UpdateValue(barValue);
 
@@ -75,8 +76,9 @@ public class ProgressBar : MonoBehaviour
 
     void UpdateValue(float val)
     {
-        bar.fillAmount = val / 100;
-        txtTitle.text = Title + " " + val + "%";
+        bar.fillAmount = val / MaxValue; //Ziad
+        txtTitle.text = Title + " " + ((val / MaxValue) *100) + "%"; //Ziad
+        //txtTitle.text = Title + " " + val;
 
         if (Alert >= val)
         {

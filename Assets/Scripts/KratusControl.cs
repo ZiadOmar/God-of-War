@@ -6,11 +6,15 @@ using UnityEngine.UI;
 public class KratusControl : MonoBehaviour {
 
     //Kratus Info
+    public ProgressBar HealthPb;
+    public ProgressBar XpPb;
+    public ProgressBarCircle RagePb;
     public double KratosHealthPoints = 100;
     public double MaxHealthPoints = 100;
     public int KratosRageLevel = 0;
     public int KratosCurrentLevel = 1; 
     public int KratosXP=0;
+    public int KratosMaxLevelXP = 500;
     public int KratosSkillPoints=0;
 
     public double KratosDamagePoints = 0;
@@ -64,33 +68,44 @@ public class KratusControl : MonoBehaviour {
     void Update()
     {
        
-        if (GameScreenOn)
-        {
-        if (Input.GetMouseButtonDown(0))
-            LightAttackActivated();
+          if (GameScreenOn)
+          { 
+                if (Input.GetMouseButtonDown(0))
+                    LightAttackActivated();
 
-        if (Input.GetMouseButtonDown(1))
-            HeavyAttackActivated();
+                if (Input.GetMouseButtonDown(1))
+                    HeavyAttackActivated();
 
-        if (Input.GetKeyDown(KeyCode.R) && KratosRageLevel == 10)
-            RageActivated();
+                if (Input.GetKeyDown(KeyCode.R) && KratosRageLevel == 10)
+                    RageActivated();
 
-        if (Input.GetKey(KeyCode.LeftControl))
-            BlockingActivated();
+                if (Input.GetKey(KeyCode.LeftControl))
+                    BlockingActivated();
       
-        if (Input.GetKeyUp(KeyCode.LeftControl))
-        {
-            blocking = false;
-            if (!blocking)
-                StartCoroutine("WaitAWhile");
-        }
+                if (Input.GetKeyUp(KeyCode.LeftControl))
+                {
+                    blocking = false;
+                    if (!blocking)
+                        StartCoroutine("WaitAWhile");
+                }
 
 
-        if (Input.GetKeyDown(KeyCode.F1)) //Cheaaat
-                enemyAttackers = 4;
-        }
+                if (Input.GetKeyDown(KeyCode.F1)) //Finish wave Cheaaat
+                        enemyAttackers = 4;
 
+                if (Input.GetKeyDown(KeyCode.F2)) //Kill Enemy Cheaaat
+                        XPIncAndCheckForLevelUp();
+        
 
+                HealthPb.BarValue = (int)KratosHealthPoints;
+                HealthPb.MaxValue = (int)MaxHealthPoints;
+
+                XpPb.BarValue = KratosXP;
+                XpPb.MaxValue = KratosMaxLevelXP;
+
+                RagePb.BarValue = KratosRageLevel;
+                RagePb.MaxValue = 10;
+          }
     }
 
    
@@ -101,17 +116,11 @@ public class KratusControl : MonoBehaviour {
 
         int KratosLevel = KratosCurrentLevel;
 
-        if (KratosXP >= 500 && KratosXP < 1000)
-            KratosCurrentLevel = 2;
-        else if (KratosXP >= 1000 && KratosXP < 2000)
-            KratosCurrentLevel = 3;
-        else if (KratosXP >= 2000 && KratosXP < 4000)
-            KratosCurrentLevel = 4;
-        else if (KratosXP >= 4000 && KratosXP < 8000)
-            KratosCurrentLevel = 5;
-        else if (KratosXP >= 8000 && KratosXP < 16000)
-            KratosCurrentLevel = 6;
-
+        if (KratosXP >= KratosMaxLevelXP && KratosXP < (KratosMaxLevelXP*2))
+        {
+            KratosCurrentLevel++;
+            KratosMaxLevelXP *= 2;
+        }
 
         if (KratosLevel != KratosCurrentLevel)
             KratosSkillPoints++;

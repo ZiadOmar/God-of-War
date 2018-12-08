@@ -6,6 +6,9 @@ using UnityEngine.UI;
 [ExecuteInEditMode]
 
 public class ProgressBarCircle : MonoBehaviour {
+
+    public int MaxValue; //Ziad
+
     [Header("Title Setting")]
     public string Title;
     public Color TitleColor;
@@ -36,7 +39,7 @@ public class ProgressBarCircle : MonoBehaviour {
 
         set
         {
-            value = Mathf.Clamp(value, 0, 100);
+            value = Mathf.Clamp(value, 0, MaxValue); //Ziad
             barValue = value;
             UpdateValue(barValue);
 
@@ -73,11 +76,10 @@ public class ProgressBarCircle : MonoBehaviour {
     void UpdateValue(float val)
     {
        
-        bar.fillAmount = -(val / 100) + 1f;
+        bar.fillAmount = -(val / MaxValue) + 1f; //Ziad
+        txtTitle.text = Title + " " + ((val / MaxValue) * 100) + "%";  //Ziad
 
-        txtTitle.text = Title + " " + val + "%";
-
-        if (Alert >= val)
+        if (Alert == val)
         {
             barBackground.color = BarAlertColor;
         }
@@ -111,6 +113,7 @@ public class ProgressBarCircle : MonoBehaviour {
             {
                 nextPlay = Time.time + RepearRate;
                 audiosource.PlayOneShot(sound);
+                
             }
         }
     }
