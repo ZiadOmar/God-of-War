@@ -16,6 +16,12 @@ TagManager:
   - BossWeakPoint2
   - BossWeakPoint3
   - BossWeakPoint1
+  - Rock
+  - ObstacleRoom1Collider
+  - ObstacleRoom2Collider
+  - ObstacleRoom3Collider
+  - ObstacleRoom4Collider
+  - Obstacles
   layers:
   - Default
   - TransparentFX

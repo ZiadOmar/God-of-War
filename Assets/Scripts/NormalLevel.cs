@@ -4,47 +4,60 @@ using UnityEngine;
 
 public class NormalLevel : MonoBehaviour {
 
+    public GameObject kratos;
+
+    // Waves
+    public GameObject Wave1Level;
+    public GameObject Wave2Level;
+    public GameObject Wave3Level;
+    public bool Wave1;
+    public bool Wave2;
+    public bool Wave3;
     public GameObject[] Wave1Enemies = new GameObject[4];
     public GameObject[] Wave2Enemies = new GameObject[4];
     public GameObject[] Wave3Enemies = new GameObject[4];
 
 
-    public GameObject kratos;
+    //Obstacle Rooms
+    public GameObject ObstacleRoom1;
+    public GameObject ObstacleRoom2;
+    public GameObject ObstacleRoom3;
+    public GameObject ObstacleRoom4;
 
-    // Wave Obstacle Rooms Bool
-    public bool Wave1;
-    public bool Wave2;
-    public bool Wave3;
-
-    // Wave Obstacle Rooms Bool
-    public GameObject Wave1ObstacleRoom;
-    public GameObject Wave2ObstacleRoom;
-    public GameObject Wave3ObstacleRoom;
+    public GameObject ObstacleRoom1StartPosition;
+    public GameObject[] WaveRoomsEnd = new GameObject[3];
 
     // Use this for initialization
-    void Start () {
-        Wave1 = true;
-        Wave1ObstacleRoom.SetActive(true);
+    public void Start () {
 
+        ObstacleRoom1.SetActive(true);
+        kratos.transform.position = ObstacleRoom1StartPosition.transform.position;
+
+        ObstacleRoom2.SetActive(false);
+        ObstacleRoom3.SetActive(false);
+        ObstacleRoom4.SetActive(false);
+
+        Wave1Level.SetActive(false);
+        Wave2Level.SetActive(false);
+        Wave3Level.SetActive(false);
+        Wave1 = false;
         Wave2 = false;
-        Wave2ObstacleRoom.SetActive(false);
-
         Wave3 = false;
-        Wave3ObstacleRoom.SetActive(false);
     }
 
     // Update is called once per frame
     void Update()
     {
+
         if (kratos.GetComponent<KratusControl>().enemyAttackers < 4)
         {
             if (Wave1)
                 Wave1Room();
 
-            if (Wave2)
+            else if (Wave2)
                 Wave2Room();
 
-            if (Wave3)
+            else if (Wave3)
                 Wave3Room();
 
         }
@@ -55,33 +68,28 @@ public class NormalLevel : MonoBehaviour {
             if (Wave1)
             {
                 Wave1 = false;
-                Wave1ObstacleRoom.SetActive(false);
-                Wave2 = true;
-                Wave2ObstacleRoom.SetActive(true);
-                Wave3 = false;
+                //Wave1Level.SetActive(false);
+                WaveRoomsEnd[0].SetActive(false);
+                ObstacleRoom2.SetActive(true);
                 kratos.GetComponent<KratusControl>().enemyAttackers = 0;
             }
 
             else if (Wave2)
             {
-                Wave1 = false;
                 Wave2 = false;
-                Wave2ObstacleRoom.SetActive(false);
-                Wave3 = true;
-                Wave3ObstacleRoom.SetActive(true);
+                //Wave2Level.SetActive(false);
+                WaveRoomsEnd[1].SetActive(false);
+                ObstacleRoom3.SetActive(true);
                 kratos.GetComponent<KratusControl>().enemyAttackers = 0;
             }
 
             else if (Wave3)
             {
-                Wave1 = false;
-                Wave2 = false;
                 Wave3 = false;
-                Wave3ObstacleRoom.SetActive(false);
+                // Wave3Level.SetActive(false);
+                WaveRoomsEnd[2].SetActive(false);
+                ObstacleRoom4.SetActive(true);
                 kratos.GetComponent<KratusControl>().enemyAttackers = 0;
-
-                kratos.GetComponent<KratusControl>().BossLevel.SetActive(true);
-                kratos.GetComponent<KratusControl>().NormalLevel.SetActive(false);
             }
         }
     }

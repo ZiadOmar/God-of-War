@@ -78,7 +78,7 @@ public class WeaponAttack : MonoBehaviour {
                 //Destroy(Boss); //Animation Dying
                 Boss.GetComponent<Animator>().SetTrigger("Dying");
                 //Credits Roll
-                //Kratos.BossDefeated = true;
+                Kratos.BossIsDefeated();
             }
 
             Kratos.KratosRageLevel++;
@@ -107,8 +107,9 @@ public class WeaponAttack : MonoBehaviour {
             WeakPoint1++;
             if (WeakPoint1 == 3)
             {
-                Destroy(other.gameObject);
-                // Stunning
+                //Destroy(other.gameObject);
+                //Stunning
+                BossStunned();
             }
 
             Boss.GetComponent<Animator>().SetTrigger("Hit Reaction");
@@ -118,11 +119,12 @@ public class WeaponAttack : MonoBehaviour {
                 //Destroy(Boss); //Animation Dying
                 Boss.GetComponent<Animator>().SetTrigger("Dying");
                 //Credits Roll
-                //Kratos.BossDefeated = true;
+                Kratos.BossIsDefeated();
             }
 
             Kratos.KratosRageLevel++;
             other.gameObject.GetComponent<BossLevel>().BossHealthPoints = BossHealthPoints;
+            other.gameObject.GetComponent<BossLevel>().WeakPoint1 = WeakPoint1;
             Kratos.lightAttack = false;
             Kratos.heavyAttack = false;
 
@@ -147,8 +149,9 @@ public class WeaponAttack : MonoBehaviour {
             WeakPoint2++;
             if (WeakPoint2 == 3)
             {
-                Destroy(other.gameObject);
-                // Stunning
+                //Destroy(other.gameObject);
+                //Stunning
+                BossStunned();
             }
 
             Boss.GetComponent<Animator>().SetTrigger("Hit Reaction");
@@ -158,12 +161,13 @@ public class WeaponAttack : MonoBehaviour {
                 //Destroy(Boss); //Animation Dying
                 Boss.GetComponent<Animator>().SetTrigger("Dying");
                 //Credits Roll
-                //Kratos.BossDefeated = true;
+                Kratos.BossIsDefeated();
             }
             
 
             Kratos.KratosRageLevel++;
             Boss.GetComponent<BossLevel>().BossHealthPoints = BossHealthPoints;
+            other.gameObject.GetComponent<BossLevel>().WeakPoint2 = WeakPoint2;
             Kratos.lightAttack = false;
             Kratos.heavyAttack = false;
 
@@ -188,8 +192,9 @@ public class WeaponAttack : MonoBehaviour {
             WeakPoint3++;
             if (WeakPoint3 == 3)
             {
-                Destroy(other.gameObject);
-                // Stunning
+                //Destroy(other.gameObject);
+                //Stunning
+                BossStunned();
             }
 
             Boss.GetComponent<Animator>().SetTrigger("Hit Reaction");
@@ -199,13 +204,29 @@ public class WeaponAttack : MonoBehaviour {
                 //Destroy(Boss); //Animation Dying
                 Boss.GetComponent<Animator>().SetTrigger("Dying");
                 //Credits Roll
-                //Kratos.BossDefeated = true;
+                Kratos.BossIsDefeated();
             }
 
             Kratos.KratosRageLevel++;
             Boss.GetComponent<BossLevel>().BossHealthPoints = BossHealthPoints;
+            other.gameObject.GetComponent<BossLevel>().WeakPoint3 = WeakPoint3;
             Kratos.lightAttack = false;
             Kratos.heavyAttack = false;
         }
+    }
+
+    private void BossStunned()
+    {
+        Boss.GetComponent<UnityStandardAssets.Characters.ThirdPerson.ThirdPersonCharacter>().m_AnimSpeedMultiplier = 0;
+        Boss.GetComponent<UnityStandardAssets.Characters.ThirdPerson.ThirdPersonCharacter>().m_MoveSpeedMultiplier = 0;
+
+        StartCoroutine("Wait");
+    }
+
+    IEnumerator Wait()
+    {
+        yield return new WaitForSecondsRealtime(5f);
+        Boss.GetComponent<UnityStandardAssets.Characters.ThirdPerson.ThirdPersonCharacter>().m_AnimSpeedMultiplier = 1;
+        Boss.GetComponent<UnityStandardAssets.Characters.ThirdPerson.ThirdPersonCharacter>().m_MoveSpeedMultiplier = 1;
     }
 }

@@ -15,7 +15,7 @@ public class SpawnRocks : MonoBehaviour {
 	void Update () {
         if(c> 50){
             r = Random.Range(-20, 0);
-            Instantiate(rocks, new Vector3(Random.Range(-10.0f, 10.0f), transform.position.y, transform.position.z + r), transform.rotation);
+            Instantiate(rocks, new Vector3(Random.Range(-10.0f, 10.0f), transform.position.y, transform.position.z + r), transform.rotation,transform.parent);
             c = 0;
         }
         c++;

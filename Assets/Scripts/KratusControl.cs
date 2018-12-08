@@ -49,6 +49,7 @@ public class KratusControl : MonoBehaviour {
     public GameObject Boss;
     public bool BossDefeated;
 
+    //Dead
     public bool GameOver;
     public Avatar DyingAvatar;
 
@@ -76,8 +77,7 @@ public class KratusControl : MonoBehaviour {
 
         if (Input.GetKey(KeyCode.LeftControl))
             BlockingActivated();
-        }
-
+      
         if (Input.GetKeyUp(KeyCode.LeftControl))
         {
             blocking = false;
@@ -85,11 +85,16 @@ public class KratusControl : MonoBehaviour {
                 StartCoroutine("WaitAWhile");
         }
 
-    
- }
 
-    //Enemy Killed  >>>>   XPIncAndCheckForLevelUp();
+        if (Input.GetKeyDown(KeyCode.F1)) //Cheaaat
+                enemyAttackers = 4;
+        }
 
+
+    }
+
+   
+    //Enemy Killed
     public void XPIncAndCheckForLevelUp()
     {
         KratosXP += 50;
@@ -112,16 +117,7 @@ public class KratusControl : MonoBehaviour {
             KratosSkillPoints++;
     }
 
-    private void OnTriggerEnter(Collider other)
-    {   
-        //Health Chest
-        if (other.gameObject.CompareTag("HealthChest"))
-        {
-            KratosHealthPoints = MaxHealthPoints;
-        }
-    }
-
-
+  
     private void LightAttackActivated()
     {
         lightAttack = true;
@@ -234,12 +230,64 @@ public class KratusControl : MonoBehaviour {
     }
 
 
+    public void BossIsDefeated()
+    {
+        StartCoroutine("Wait");
+    }
+
+    IEnumerator Wait()
+    {
+        yield return new WaitForSecondsRealtime(4f);
+        BossDefeated = true;
+    }
 
 
+    private void OnCollisionEnter(Collision collision) // For Normal Levels and Obstacle Rooms
+    {
+        //Health Chest
+        if (collision.gameObject.CompareTag("HealthChest"))
+        {
+            KratosHealthPoints = MaxHealthPoints;
+            Destroy(collision.gameObject);
+        }
+
+        if (collision.gameObject.CompareTag("ObstacleRoom1Collider"))
+        {
+            NormalLevel.GetComponent<NormalLevel>().Wave1Level.SetActive(true);
+            NormalLevel.GetComponent<NormalLevel>().Wave1 = true;
+      
+        }
+
+        if (collision.gameObject.CompareTag("ObstacleRoom2Collider"))
+        {
+            NormalLevel.GetComponent<NormalLevel>().Wave2Level.SetActive(true);
+            NormalLevel.GetComponent<NormalLevel>().Wave2 = true;
+         
+        }
+
+        if (collision.gameObject.CompareTag("ObstacleRoom3Collider"))
+        {
+            NormalLevel.GetComponent<NormalLevel>().Wave3Level.SetActive(true);
+            NormalLevel.GetComponent<NormalLevel>().Wave3 = true;
+        
+        }
+
+        if (collision.gameObject.CompareTag("ObstacleRoom4Collider"))
+        {
+            BossLevel.SetActive(true);
+            //NormalLevel.SetActive(false);
+        }
 
 
-
-
+        //Obstacles
+        if (collision.gameObject.CompareTag("Obstacles"))
+        {
+           //GameOver
+           GameOver = true;
+           this.gameObject.GetComponent<Animator>().avatar = DyingAvatar;
+           this.gameObject.GetComponent<Animator>().CrossFadeInFixedTime("Dying", 0.05f);
+        }
+    }
 }
 
 

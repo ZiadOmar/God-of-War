@@ -8,7 +8,7 @@ public class BossLevel : MonoBehaviour {
     public double BossHealthPoints = 200;
     public double BossMaxHealthPoints = 200;
 
-    //public bool[] BossAttacks = new bool[3];
+    private bool[] BossAttacksNotAllowed = new bool[3];
     float timer = 0.0f;
     int seconds;
 
@@ -24,11 +24,16 @@ public class BossLevel : MonoBehaviour {
     private int RandomAttack;
 
     private bool attack;
+
+
+    public GameObject BossLevelStartPosition;
+    public GameObject Kratos;
     // Use this for initialization
-    void Start ()
-   {
-		
-   }
+    public void Start ()
+    {
+        Kratos.transform.position = BossLevelStartPosition.transform.position;
+        this.gameObject.GetComponent<Animator>().SetFloat("Forward", this.gameObject.GetComponent<NavMeshAgent>().remainingDistance);
+    }
 	
    // Update is called once per frame
    void Update ()
@@ -52,26 +57,45 @@ public class BossLevel : MonoBehaviour {
             // Choose Attack Randomly
             RandomAttack = (int)Random.Range(0.0f, 3.0f);
 
+            if (WeakPoint1 == 3 && RandomAttack == 0)
+                BossAttacksNotAllowed[0] = true;
 
- 
-                switch (RandomAttack)
+            else if (WeakPoint2 == 3 && RandomAttack == 1)
+                BossAttacksNotAllowed[1] = true;
+
+            else if (WeakPoint3 == 3 && RandomAttack == 2)
+                BossAttacksNotAllowed[2] = true;
+
+
+            switch (RandomAttack)
                 {
                     case 0:
+                    if (!BossAttacksNotAllowed[0])
+                    {
                         this.gameObject.GetComponent<Animator>().SetBool("Head attack", true);
                         this.gameObject.GetComponent<Animator>().SetBool("Hand attack", false);
                         this.gameObject.GetComponent<Animator>().SetBool("Leg attack", false);
                         attack = false;
+                    }
                         break;
                     case 1:
+                    if (!BossAttacksNotAllowed[1])
+                    {
                         this.gameObject.GetComponent<Animator>().SetBool("Head attack", false);
                         this.gameObject.GetComponent<Animator>().SetBool("Hand attack", true);
                         this.gameObject.GetComponent<Animator>().SetBool("Leg attack", false);
-                        attack = false; break;
+                        attack = false;
+                    }
+                    break;
                     case 2:
+                    if (!BossAttacksNotAllowed[2])
+                    {
                         this.gameObject.GetComponent<Animator>().SetBool("Head attack", false);
                         this.gameObject.GetComponent<Animator>().SetBool("Hand attack", false);
                         this.gameObject.GetComponent<Animator>().SetBool("Leg attack", true);
-                        attack = false; break;
+                        attack = false;
+                    }
+                    break;
 
                     default: break;
                 }

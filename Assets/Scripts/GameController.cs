@@ -120,14 +120,25 @@ public class GameController : MonoBehaviour {
 
     }
 
-    public void Restart()
-    {
-      
-    }
-
     public void RestartLevel()
     {
+        if (Player.GetComponent<KratusControl>().NormalLevel.activeInHierarchy)
+        {
 
+            Player.GetComponent<KratusControl>().NormalLevel.GetComponent<NormalLevel>().Start();
+            Player.GetComponent<Animator>().avatar = Player.GetComponent<KratusControl>().DefaultAvatar;
+        }
+        else if (Player.GetComponent<KratusControl>().BossLevel.activeInHierarchy)
+        {
+           
+            Player.GetComponent<KratusControl>().BossLevel.GetComponentInChildren<BossLevel>().Start();
+            Player.GetComponent<Animator>().avatar = Player.GetComponent<KratusControl>().DefaultAvatar;
+        }
+        GameOverScreen.SetActive(false);
+        GamePauseScreen.SetActive(false);
+        GameScreen.SetActive(true);
+        Player.GetComponent<KratusControl>().GameScreenOn = true;
+        Player.GetComponent<KratusControl>().GameOver = false;
     }
 
     public void OptionsMenu()
