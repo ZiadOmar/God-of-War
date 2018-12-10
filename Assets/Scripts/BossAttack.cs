@@ -29,7 +29,7 @@ public class BossAttack : MonoBehaviour {
                 KratosHealthPoints -= 10;
                 other.gameObject.GetComponent<Animator>().avatar = other.gameObject.GetComponent<KratusControl>().HitReactionAvatar;
                 other.gameObject.GetComponent<Animator>().CrossFadeInFixedTime("Hit Reaction", 0.05f);
-              
+                other.gameObject.GetComponents<AudioSource>()[2].Play();
             }
            
             if (KratosHealthPoints <= 0)
@@ -38,6 +38,7 @@ public class BossAttack : MonoBehaviour {
                 other.gameObject.GetComponent<KratusControl>().GameOver = true;
                 other.gameObject.GetComponent<Animator>().avatar = other.gameObject.GetComponent<KratusControl>().DyingAvatar;
                 other.gameObject.GetComponent<Animator>().CrossFadeInFixedTime("Dying", 0.05f);
+                other.gameObject.GetComponents<AudioSource>()[1].Play();
                 FightDone = true;
                 this.gameObject.GetComponentInParent<BossLevel>().gameObject.SetActive(false);
             }

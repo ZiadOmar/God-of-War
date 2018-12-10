@@ -4,15 +4,12 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - Enemy
   - Kratos
   - HealthChest
   - Camera
   - Boss
   - Plane
-  - arrow
   - fire
-  - handoferika
   - BossWeakPoint2
   - BossWeakPoint3
   - BossWeakPoint1
@@ -22,6 +19,9 @@ TagManager:
   - ObstacleRoom3Collider
   - ObstacleRoom4Collider
   - Obstacles
+  - FireHand
+  - FireEnemy
+  - RunningEnemy
   layers:
   - Default
   - TransparentFX

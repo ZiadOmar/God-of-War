@@ -10,24 +10,21 @@ public class Enemy : MonoBehaviour {
     bool Attack;
     public string type;
     int i = 0;
-    GameObject hand;
-  
+
     // Use this for initialization
     void Start () {
-        hand = GameObject.FindGameObjectWithTag("handoferika");
-	}
-	
-	// Update is called once per frame
-	void Update () {
-        if(type == "close_range")
-            this.gameObject.GetComponent<Animator>().SetFloat("Forward",this.gameObject.GetComponent<NavMeshAgent>().remainingDistance);
-        else
-            this.gameObject.GetComponent<Animator>().SetFloat("Forward", this.gameObject.GetComponent<NavMeshAgent>().remainingDistance-19);
+
     }
 
+    // Update is called once per frame
+    void Update()
+    {
+        if (type == "close_range")
+            this.gameObject.GetComponent<Animator>().SetFloat("Forward", this.gameObject.GetComponent<NavMeshAgent>().remainingDistance);
+   
+    }
     private void OnCollisionStay(Collision other)
     {
-        
         // if enemy hand hit Kratos
         if (other.gameObject.CompareTag("Player"))
         {
@@ -47,6 +44,7 @@ public class Enemy : MonoBehaviour {
                     KratosHealthPoints -= 10;
                     other.gameObject.GetComponent<Animator>().avatar = other.gameObject.GetComponent<KratusControl>().HitReactionAvatar;
                     other.gameObject.GetComponent<Animator>().CrossFadeInFixedTime("Hit Reaction", 0.05f);
+                    other.gameObject.GetComponents<AudioSource>()[2].Play();
                     other.gameObject.GetComponent<KratusControl>().ReturnToDefaultAvatar();
                 }
                 if (KratosHealthPoints <= 0)
@@ -55,57 +53,13 @@ public class Enemy : MonoBehaviour {
                     other.gameObject.GetComponent<KratusControl>().GameOver = true;
                     other.gameObject.GetComponent<Animator>().avatar = other.gameObject.GetComponent<KratusControl>().DyingAvatar;
                     other.gameObject.GetComponent<Animator>().CrossFadeInFixedTime("Dying", 0.05f);
-
+                    other.gameObject.GetComponents<AudioSource>()[1].Play();
                     FightDone = true;
                 }
 
                 other.gameObject.GetComponent<KratusControl>().KratosHealthPoints = KratosHealthPoints;
             }
             i++;
-        }
-
-      
-       
-    }
-
-    private void OnTriggerStay(Collider other)
-    {
-        if (other.gameObject.CompareTag("Player"))
-        {
-            if (i == 0)
-                Debug.Log("remaining distane" + this.gameObject.GetComponent<NavMeshAgent>().remainingDistance);
-
-            if (i % 250 == 0)
-            {
-                double KratosHealthPoints = other.gameObject.GetComponent<KratusControl>().KratosHealthPoints;
-                if (type == "long_range")
-                {
-                    this.gameObject.GetComponent<Animator>().SetTrigger("shoot");
-                    hand.GetComponent<Erika>().enabled = true;
-
-
-                    if (!FightDone && !other.gameObject.GetComponent<KratusControl>().blocking)
-                    {
-                        KratosHealthPoints -= 10;
-                        other.gameObject.GetComponent<Animator>().avatar = other.gameObject.GetComponent<KratusControl>().HitReactionAvatar;
-                        other.gameObject.GetComponent<Animator>().CrossFadeInFixedTime("Hit Reaction", 0.05f);
-                        other.gameObject.GetComponent<KratusControl>().ReturnToDefaultAvatar();
-                    }
-                    if (KratosHealthPoints <= 0)
-                    {
-                        //GameOver
-                        other.gameObject.GetComponent<KratusControl>().GameOver = true;
-                        other.gameObject.GetComponent<Animator>().avatar = other.gameObject.GetComponent<KratusControl>().DyingAvatar;
-                        other.gameObject.GetComponent<Animator>().CrossFadeInFixedTime("Dying", 0.05f);
-
-                        FightDone = true;
-                    }
-
-                    other.gameObject.GetComponent<KratusControl>().KratosHealthPoints = KratosHealthPoints;
-
-                }
-            }
-            i++;
-        }
+        } 
     }
 }

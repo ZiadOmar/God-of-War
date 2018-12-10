@@ -76,7 +76,7 @@ public class KratusControl : MonoBehaviour {
                 if (Input.GetMouseButtonDown(1))
                     HeavyAttackActivated();
 
-                if (Input.GetKeyDown(KeyCode.R) && KratosRageLevel == 10)
+                if (Input.GetKeyDown(KeyCode.R) && KratosRageLevel >= 10)
                     RageActivated();
 
                 if (Input.GetKey(KeyCode.LeftControl))
@@ -90,12 +90,7 @@ public class KratusControl : MonoBehaviour {
                 }
 
 
-                if (Input.GetKeyDown(KeyCode.F1)) //Finish wave Cheaaat
-                        enemyAttackers = 4;
-
-                if (Input.GetKeyDown(KeyCode.F2)) //Kill Enemy Cheaaat
-                        XPIncAndCheckForLevelUp();
-        
+                this.GetComponents<AudioSource>()[4].Play(); //Walking
 
                 HealthPb.BarValue = (int)KratosHealthPoints;
                 HealthPb.MaxValue = (int)MaxHealthPoints;
@@ -160,7 +155,7 @@ public class KratusControl : MonoBehaviour {
         rage = true;
         this.GetComponent<Animator>().avatar = RageAvatar;
         this.GetComponent<Animator>().CrossFadeInFixedTime("Rage", 0.05f);
-
+        this.GetComponents<AudioSource>()[3].Play();
         Debug.Log("Rageeeee");
         KratosRageLevel = 0;
 
@@ -256,6 +251,7 @@ public class KratusControl : MonoBehaviour {
         //Health Chest
         if (collision.gameObject.CompareTag("HealthChest"))
         {
+            this.GetComponents<AudioSource>()[0].Play();
             KratosHealthPoints = MaxHealthPoints;
             Destroy(collision.gameObject);
         }
@@ -286,7 +282,6 @@ public class KratusControl : MonoBehaviour {
             BossLevel.SetActive(true);
             //NormalLevel.SetActive(false);
         }
-
 
         //Obstacles
         if (collision.gameObject.CompareTag("Obstacles"))

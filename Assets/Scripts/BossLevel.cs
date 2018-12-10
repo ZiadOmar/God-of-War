@@ -25,9 +25,9 @@ public class BossLevel : MonoBehaviour {
 
     private bool attack;
 
-
     public GameObject BossLevelStartPosition;
     public GameObject Kratos;
+
     // Use this for initialization
     public void Start ()
     {
@@ -41,6 +41,7 @@ public class BossLevel : MonoBehaviour {
 
         this.gameObject.GetComponent<Animator>().SetFloat("Forward", this.gameObject.GetComponent<NavMeshAgent>().remainingDistance);
         remainingDistance = this.gameObject.GetComponent<NavMeshAgent>().remainingDistance;
+
         // 5 Seconds Time
         timer += Time.deltaTime;
         seconds = System.Convert.ToInt32(timer % 60);
@@ -49,11 +50,7 @@ public class BossLevel : MonoBehaviour {
             timer = 0.0f;
             attack = true;
             Debug.Log("5 seconds passed");
-
-            //for(int attackIndex = 0; attackIndex < 3; attackIndex++)
-            //{
-            //    BossAttacks[attackIndex] = false;
-            //}
+       
             // Choose Attack Randomly
             RandomAttack = (int)Random.Range(0.0f, 3.0f);
 
@@ -115,12 +112,7 @@ public class BossLevel : MonoBehaviour {
             this.gameObject.GetComponent<Animator>().SetBool("Leg attack", false);
 
 
-            //this.gameObject.GetComponent<Animator>().SetBool("Head attack", false);
-            //this.gameObject.GetComponent<Animator>().SetBool("Hand attack", false);
-            //this.gameObject.GetComponent<Animator>().SetBool("Leg attack", false);
-
             Debug.Log("Attack Chosen:" + RandomAttack);
-            //BossAttacks[RandomAttack-1] = true; 
         
         }
 

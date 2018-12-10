@@ -24,8 +24,8 @@ public class WeaponAttack : MonoBehaviour {
     {
         //Debug.Log("hit");
 
-        // if Sword hit an enemy
-        if (other.gameObject.CompareTag("Enemy") && (Kratos.lightAttack || Kratos.heavyAttack))
+        // if Sword hit a Running enemy
+        if (other.gameObject.CompareTag("RunningEnemy") && (Kratos.lightAttack || Kratos.heavyAttack))
         {
             //Debug.Log("hittttttttt");
             double enemyHealthPoints = other.gameObject.GetComponent<Enemy>().EnemyHealthPoints;
@@ -45,6 +45,8 @@ public class WeaponAttack : MonoBehaviour {
             {
                 //Destroy(other.gameObject); // Animation Dying
                 other.gameObject.GetComponent<Animator>().SetTrigger("Dying");
+                other.gameObject.GetComponent<UnityStandardAssets.Characters.ThirdPerson.AICharacterControl>().target = null;
+             
                 Kratos.XPIncAndCheckForLevelUp();
                 Kratos.enemyAttackers++;
                 instNextEnemy = true;
@@ -52,6 +54,39 @@ public class WeaponAttack : MonoBehaviour {
 
             Kratos.KratosRageLevel++;
             other.gameObject.GetComponent<Enemy>().EnemyHealthPoints = enemyHealthPoints;
+            Kratos.lightAttack = false;
+            Kratos.heavyAttack = false;
+        }
+
+        // if Sword hit the fire enemy
+        if (other.gameObject.CompareTag("FireEnemy") && (Kratos.lightAttack || Kratos.heavyAttack))
+        {
+            //Debug.Log("hittttttttt");
+            double enemyHealthPoints = other.gameObject.GetComponent<LongRangeEnemy>().EnemyHealthPoints;
+            if (Kratos.rage)
+            {
+                enemyHealthPoints -= Kratos.KratosDamagePoints * 2;
+                Kratos.rage = false;
+            }
+            else
+            {
+                enemyHealthPoints -= Kratos.KratosDamagePoints;
+            }
+
+            other.gameObject.GetComponent<Animator>().SetTrigger("Hit Reaction");
+
+            if (enemyHealthPoints <= 0)
+            {
+                // Animation Dying
+                other.gameObject.GetComponent<Animator>().SetTrigger("Dying");
+                other.gameObject.GetComponent<LongRangeEnemy>().FireManDead = true;
+                Kratos.XPIncAndCheckForLevelUp();
+                Kratos.enemyAttackers++;
+                instNextEnemy = true;
+            }
+
+            Kratos.KratosRageLevel++;
+            other.gameObject.GetComponent<LongRangeEnemy>().EnemyHealthPoints = enemyHealthPoints;
             Kratos.lightAttack = false;
             Kratos.heavyAttack = false;
         }
@@ -77,6 +112,7 @@ public class WeaponAttack : MonoBehaviour {
             {
                 //Destroy(Boss); //Animation Dying
                 Boss.GetComponent<Animator>().SetTrigger("Dying");
+                other.gameObject.GetComponent<UnityStandardAssets.Characters.ThirdPerson.AICharacterControl>().target = null;
                 //Credits Roll
                 Kratos.BossIsDefeated();
             }
@@ -118,6 +154,7 @@ public class WeaponAttack : MonoBehaviour {
             {
                 //Destroy(Boss); //Animation Dying
                 Boss.GetComponent<Animator>().SetTrigger("Dying");
+                other.gameObject.GetComponent<UnityStandardAssets.Characters.ThirdPerson.AICharacterControl>().target = null;
                 //Credits Roll
                 Kratos.BossIsDefeated();
             }
@@ -160,6 +197,7 @@ public class WeaponAttack : MonoBehaviour {
             {
                 //Destroy(Boss); //Animation Dying
                 Boss.GetComponent<Animator>().SetTrigger("Dying");
+                other.gameObject.GetComponent<UnityStandardAssets.Characters.ThirdPerson.AICharacterControl>().target = null;
                 //Credits Roll
                 Kratos.BossIsDefeated();
             }
@@ -203,6 +241,7 @@ public class WeaponAttack : MonoBehaviour {
             {
                 //Destroy(Boss); //Animation Dying
                 Boss.GetComponent<Animator>().SetTrigger("Dying");
+                other.gameObject.GetComponent<UnityStandardAssets.Characters.ThirdPerson.AICharacterControl>().target = null;
                 //Credits Roll
                 Kratos.BossIsDefeated();
             }

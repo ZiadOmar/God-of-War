@@ -15,11 +15,11 @@ public class rockdestroy : MonoBehaviour {
 	}
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.tag == "Rock")
+        if (collision.gameObject.tag == "Obstacles")
         {
 
             Destroy(collision.gameObject);
-            Debug.Log("moooottt");
+            //Debug.Log("moooottt");
         }
     }
 }
