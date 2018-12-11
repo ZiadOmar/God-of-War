@@ -56,19 +56,34 @@ public class KratusControl : MonoBehaviour {
     //Dead
     public bool GameOver;
     public Avatar DyingAvatar;
+    bool Dead = false;
+
+    //Sound
+    public Sound SoundManager;
 
     // Use this for initialization
     void Start()
     {
         Sword.SetActive(true);
         Axe.SetActive(false);
+       
     }
 
     // Update is called once per frame
     void Update()
     {
-       
-          if (GameScreenOn)
+      if(this.GetComponent<Invector.CharacterController.vThirdPersonController>().input.x == 0 
+        && this.GetComponent<Invector.CharacterController.vThirdPersonController>().input.y == 0)
+        {
+            this.GetComponents<AudioSource>()[4].outputAudioMixerGroup.audioMixer.SetFloat("WalkingVOl", -80f); //Stopping
+
+        }
+        else
+        {
+            this.GetComponents<AudioSource>()[4].outputAudioMixerGroup.audioMixer.SetFloat("WalkingVOl", SoundManager.SFXVolume); //Walking
+        }
+
+        if (GameScreenOn)
           { 
                 if (Input.GetMouseButtonDown(0))
                     LightAttackActivated();
@@ -89,9 +104,8 @@ public class KratusControl : MonoBehaviour {
                         StartCoroutine("WaitAWhile");
                 }
 
-
-                this.GetComponents<AudioSource>()[4].Play(); //Walking
-
+                
+             
                 HealthPb.BarValue = (int)KratosHealthPoints;
                 HealthPb.MaxValue = (int)MaxHealthPoints;
 
@@ -280,16 +294,21 @@ public class KratusControl : MonoBehaviour {
         if (collision.gameObject.CompareTag("ObstacleRoom4Collider"))
         {
             BossLevel.SetActive(true);
+            NormalLevel.GetComponent<AudioSource>().outputAudioMixerGroup.audioMixer.SetFloat("NormalLevelVol", -80f); //Normal Level
+            BossLevel.GetComponent<AudioSource>().outputAudioMixerGroup.audioMixer.SetFloat("BossLevelVol", SoundManager.MusicVolume); //Boss Level
+
             //NormalLevel.SetActive(false);
         }
 
         //Obstacles
-        if (collision.gameObject.CompareTag("Obstacles"))
+        if (collision.gameObject.CompareTag("Obstacles") && !(Dead))
         {
            //GameOver
            GameOver = true;
            this.gameObject.GetComponent<Animator>().avatar = DyingAvatar;
            this.gameObject.GetComponent<Animator>().CrossFadeInFixedTime("Dying", 0.05f);
+           this.GetComponents<AudioSource>()[2].Play(); //Death 
+           Dead = true;
         }
     }
 }

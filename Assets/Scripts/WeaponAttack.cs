@@ -39,6 +39,7 @@ public class WeaponAttack : MonoBehaviour {
                 enemyHealthPoints -= Kratos.KratosDamagePoints;
             }
 
+            other.gameObject.GetComponents<AudioSource>()[1].Play(); // Hit Sound
             other.gameObject.GetComponent<Animator>().SetTrigger("Hit Reaction");
 
             if (enemyHealthPoints <= 0)
@@ -46,7 +47,9 @@ public class WeaponAttack : MonoBehaviour {
                 //Destroy(other.gameObject); // Animation Dying
                 other.gameObject.GetComponent<Animator>().SetTrigger("Dying");
                 other.gameObject.GetComponent<UnityStandardAssets.Characters.ThirdPerson.AICharacterControl>().target = null;
-             
+                other.gameObject.GetComponents<AudioSource>()[0].Play(); // Death Sound
+                other.gameObject.GetComponents<AudioSource>()[2].enabled = false; //Walking
+                other.gameObject.GetComponents<AudioSource>()[3].enabled = false; //Voice Over
                 Kratos.XPIncAndCheckForLevelUp();
                 Kratos.enemyAttackers++;
                 instNextEnemy = true;
@@ -72,7 +75,7 @@ public class WeaponAttack : MonoBehaviour {
             {
                 enemyHealthPoints -= Kratos.KratosDamagePoints;
             }
-
+            other.gameObject.GetComponents<AudioSource>()[1].Play(); // Hit Sound
             other.gameObject.GetComponent<Animator>().SetTrigger("Hit Reaction");
 
             if (enemyHealthPoints <= 0)
@@ -80,7 +83,8 @@ public class WeaponAttack : MonoBehaviour {
                 // Animation Dying
                 other.gameObject.GetComponent<Animator>().SetTrigger("Dying");
                 other.gameObject.GetComponent<LongRangeEnemy>().FireManDead = true;
-                Kratos.XPIncAndCheckForLevelUp();
+                other.gameObject.GetComponents<AudioSource>()[0].Play(); // Death Sound
+                other.gameObject.GetComponents<AudioSource>()[2].enabled = false; //Voice Over                Kratos.XPIncAndCheckForLevelUp();
                 Kratos.enemyAttackers++;
                 instNextEnemy = true;
             }
@@ -105,14 +109,17 @@ public class WeaponAttack : MonoBehaviour {
             {
                 BossHealthPoints -= (BossMaxHealthPoints * 0.05);
             }
-
+            Boss.GetComponents<AudioSource>()[1].Play(); // Hit Sound
             Boss.GetComponent<Animator>().SetTrigger("Hit Reaction");
 
             if (BossHealthPoints <= 0)
             {
                 //Destroy(Boss); //Animation Dying
                 Boss.GetComponent<Animator>().SetTrigger("Dying");
-                other.gameObject.GetComponent<UnityStandardAssets.Characters.ThirdPerson.AICharacterControl>().target = null;
+                Boss.GetComponents<AudioSource>()[0].Play(); // Death Sound
+                Boss.GetComponents<AudioSource>()[2].outputAudioMixerGroup.audioMixer.SetFloat("EnemyWalkVol", -80f); //Walking
+                Boss.GetComponents<AudioSource>()[3].outputAudioMixerGroup.audioMixer.SetFloat("VoiceOverVol", -80f); //Voice Over
+                Boss.GetComponent<UnityStandardAssets.Characters.ThirdPerson.AICharacterControl>().target = null;
                 //Credits Roll
                 Kratos.BossIsDefeated();
             }
@@ -147,21 +154,24 @@ public class WeaponAttack : MonoBehaviour {
                 //Stunning
                 BossStunned();
             }
-
+            Boss.GetComponents<AudioSource>()[1].Play(); // Hit Sound
             Boss.GetComponent<Animator>().SetTrigger("Hit Reaction");
 
             if (BossHealthPoints <= 0)
             {
                 //Destroy(Boss); //Animation Dying
                 Boss.GetComponent<Animator>().SetTrigger("Dying");
-                other.gameObject.GetComponent<UnityStandardAssets.Characters.ThirdPerson.AICharacterControl>().target = null;
+                Boss.GetComponents<AudioSource>()[0].Play(); // Death Sound
+                Boss.GetComponents<AudioSource>()[2].outputAudioMixerGroup.audioMixer.SetFloat("EnemyWalkVol", -80f); //Walking
+                Boss.GetComponents<AudioSource>()[3].outputAudioMixerGroup.audioMixer.SetFloat("VoiceOverVol", -80f); //Voice Over
+                Boss.GetComponent<UnityStandardAssets.Characters.ThirdPerson.AICharacterControl>().target = null;
                 //Credits Roll
                 Kratos.BossIsDefeated();
             }
 
             Kratos.KratosRageLevel++;
-            other.gameObject.GetComponent<BossLevel>().BossHealthPoints = BossHealthPoints;
-            other.gameObject.GetComponent<BossLevel>().WeakPoint1 = WeakPoint1;
+            Boss.GetComponent<BossLevel>().BossHealthPoints = BossHealthPoints;
+            Boss.GetComponent<BossLevel>().WeakPoint1 = WeakPoint1;
             Kratos.lightAttack = false;
             Kratos.heavyAttack = false;
 
@@ -191,21 +201,25 @@ public class WeaponAttack : MonoBehaviour {
                 BossStunned();
             }
 
+            Boss.GetComponents<AudioSource>()[1].Play(); // Hit Sound
             Boss.GetComponent<Animator>().SetTrigger("Hit Reaction");
 
             if (BossHealthPoints <= 0)
             {
                 //Destroy(Boss); //Animation Dying
                 Boss.GetComponent<Animator>().SetTrigger("Dying");
-                other.gameObject.GetComponent<UnityStandardAssets.Characters.ThirdPerson.AICharacterControl>().target = null;
+                Boss.GetComponents<AudioSource>()[0].Play(); // Death Sound
+                Boss.GetComponents<AudioSource>()[2].outputAudioMixerGroup.audioMixer.SetFloat("EnemyWalkVol", -80f); //Walking
+                Boss.GetComponents<AudioSource>()[3].outputAudioMixerGroup.audioMixer.SetFloat("VoiceOverVol", -80f); //Voice Over
+                Boss.GetComponent<UnityStandardAssets.Characters.ThirdPerson.AICharacterControl>().target = null;
                 //Credits Roll
                 Kratos.BossIsDefeated();
             }
-            
+
 
             Kratos.KratosRageLevel++;
             Boss.GetComponent<BossLevel>().BossHealthPoints = BossHealthPoints;
-            other.gameObject.GetComponent<BossLevel>().WeakPoint2 = WeakPoint2;
+            Boss.GetComponent<BossLevel>().WeakPoint2 = WeakPoint2;
             Kratos.lightAttack = false;
             Kratos.heavyAttack = false;
 
@@ -235,20 +249,24 @@ public class WeaponAttack : MonoBehaviour {
                 BossStunned();
             }
 
+            Boss.GetComponents<AudioSource>()[1].Play(); // Hit Sound
             Boss.GetComponent<Animator>().SetTrigger("Hit Reaction");
 
             if (BossHealthPoints <= 0)
             {
                 //Destroy(Boss); //Animation Dying
                 Boss.GetComponent<Animator>().SetTrigger("Dying");
-                other.gameObject.GetComponent<UnityStandardAssets.Characters.ThirdPerson.AICharacterControl>().target = null;
+                Boss.GetComponents<AudioSource>()[0].Play(); // Death Sound
+                Boss.GetComponents<AudioSource>()[2].outputAudioMixerGroup.audioMixer.SetFloat("EnemyWalkVol", -80f); //Walking
+                Boss.GetComponents<AudioSource>()[3].outputAudioMixerGroup.audioMixer.SetFloat("VoiceOverVol",-80f); //Voice Over
+                Boss.GetComponent<UnityStandardAssets.Characters.ThirdPerson.AICharacterControl>().target = null;
                 //Credits Roll
                 Kratos.BossIsDefeated();
             }
 
             Kratos.KratosRageLevel++;
             Boss.GetComponent<BossLevel>().BossHealthPoints = BossHealthPoints;
-            other.gameObject.GetComponent<BossLevel>().WeakPoint3 = WeakPoint3;
+            Boss.GetComponent<BossLevel>().WeakPoint3 = WeakPoint3;
             Kratos.lightAttack = false;
             Kratos.heavyAttack = false;
         }

@@ -10,6 +10,9 @@ public class NormalLevel : MonoBehaviour {
     public GameObject Wave1Level;
     public GameObject Wave2Level;
     public GameObject Wave3Level;
+    public GameObject Wave1LevelStartPosition;
+    public GameObject Wave2LevelStartPosition;
+    public GameObject Wave3LevelStartPosition;
     public bool Wave1;
     public bool Wave2;
     public bool Wave3;
@@ -25,10 +28,20 @@ public class NormalLevel : MonoBehaviour {
     public GameObject ObstacleRoom4;
 
     public GameObject ObstacleRoom1StartPosition;
+    public GameObject ObstacleRoom2StartPosition;
+    public GameObject ObstacleRoom3StartPosition;
+    public GameObject ObstacleRoom4StartPosition;
+
+
     public GameObject[] WaveRoomsEnd = new GameObject[3];
+
+    //Sound
+    public Sound SoundManager;
 
     // Use this for initialization
     public void Start () {
+
+        this.GetComponent<AudioSource>().outputAudioMixerGroup.audioMixer.SetFloat("NormalLevelVol", SoundManager.MusicVolume); //Normal Level
 
         ObstacleRoom1.SetActive(true);
         kratos.transform.position = ObstacleRoom1StartPosition.transform.position;
@@ -48,7 +61,7 @@ public class NormalLevel : MonoBehaviour {
     // Update is called once per frame
     void Update()
     {
-
+        
         if (kratos.GetComponent<KratusControl>().enemyAttackers < 4)
         {
             if (Wave1)

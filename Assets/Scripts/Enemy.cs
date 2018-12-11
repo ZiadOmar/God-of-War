@@ -11,8 +11,13 @@ public class Enemy : MonoBehaviour {
     public string type;
     int i = 0;
 
+    //Sound
+    public Sound SoundManager;
+
     // Use this for initialization
     void Start () {
+        this.GetComponents<AudioSource>()[2].outputAudioMixerGroup.audioMixer.SetFloat("EnemyWalkVol", SoundManager.SFXVolume); //Walking
+        this.GetComponents<AudioSource>()[3].outputAudioMixerGroup.audioMixer.SetFloat("VoiceOverVol", SoundManager.SpeechVolume); //Voice Over
 
     }
 
@@ -53,6 +58,7 @@ public class Enemy : MonoBehaviour {
                     other.gameObject.GetComponent<KratusControl>().GameOver = true;
                     other.gameObject.GetComponent<Animator>().avatar = other.gameObject.GetComponent<KratusControl>().DyingAvatar;
                     other.gameObject.GetComponent<Animator>().CrossFadeInFixedTime("Dying", 0.05f);
+                    other.gameObject.GetComponents<AudioSource>()[4].outputAudioMixerGroup.audioMixer.SetFloat("WalkingVOl", -80f); //Walking
                     other.gameObject.GetComponents<AudioSource>()[1].Play();
                     FightDone = true;
                 }

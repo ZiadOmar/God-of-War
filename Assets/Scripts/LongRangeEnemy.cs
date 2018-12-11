@@ -19,10 +19,14 @@ public class LongRangeEnemy : MonoBehaviour
 
     public bool FireManDead;
 
+    //Sound
+    public Sound SoundManager;
+
     // Use this for initialization
     void Start()
     {
         FireHand = GameObject.FindGameObjectWithTag("FireHand");
+        this.GetComponents<AudioSource>()[2].outputAudioMixerGroup.audioMixer.SetFloat("VoiceOverVol", SoundManager.SpeechVolume); //Voice Over
     }
 
     // Update is called once per frame

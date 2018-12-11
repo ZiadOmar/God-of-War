@@ -28,11 +28,19 @@ public class BossLevel : MonoBehaviour {
     public GameObject BossLevelStartPosition;
     public GameObject Kratos;
 
+
+    //Sound
+    public Sound SoundManager;
+
     // Use this for initialization
     public void Start ()
     {
+        this.gameObject.transform.parent.gameObject.GetComponent<AudioSource>().outputAudioMixerGroup.audioMixer.SetFloat("BossLevelVol", SoundManager.MusicVolume); //Boss Level
+
         Kratos.transform.position = BossLevelStartPosition.transform.position;
         this.gameObject.GetComponent<Animator>().SetFloat("Forward", this.gameObject.GetComponent<NavMeshAgent>().remainingDistance);
+        this.GetComponents<AudioSource>()[2].outputAudioMixerGroup.audioMixer.SetFloat("EnemyWalkVol", SoundManager.SFXVolume); //Walking
+        this.GetComponents<AudioSource>()[3].outputAudioMixerGroup.audioMixer.SetFloat("VoiceOverVol", SoundManager.SpeechVolume); //Voice Over
     }
 	
    // Update is called once per frame

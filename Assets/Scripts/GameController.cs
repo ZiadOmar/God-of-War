@@ -31,6 +31,9 @@ public class GameController : MonoBehaviour {
     public Text KratosSkillPoints;
     public Text UpgradeKratosSkillPoints;
 
+    //Sound
+    public Sound SoundManager;
+
     // Use this for initialization
     void Start () {
         MainMenu.SetActive(true);
@@ -44,8 +47,7 @@ public class GameController : MonoBehaviour {
         CreditsMenu.SetActive(false);
         Player.SetActive(false);
         initialPosition = Player.transform.position;
-        //this.GetComponent<AudioSource>().outputAudioMixerGroup.audioMixer.SetFloat("MasterVol", 0f);
-        //this.GetComponent<AudioSource>().outputAudioMixerGroup.audioMixer.SetFloat("MenuVol", 0f);
+        this.GetComponent<AudioSource>().outputAudioMixerGroup.audioMixer.SetFloat("MenuVol", SoundManager.MusicVolume);
  
     }
 	
@@ -74,15 +76,20 @@ public class GameController : MonoBehaviour {
             GameScreen.SetActive(false);
             Player.GetComponent<KratusControl>().GameScreenOn = false;
             Player.GetComponent<KratusControl>().GameOver = false;
+            Player.GetComponent<KratusControl>().NormalLevel.GetComponent<AudioSource>().outputAudioMixerGroup.audioMixer.SetFloat("NormalLevelVol", -80f); //Normal Level
+            Player.GetComponent<KratusControl>().BossLevel.GetComponent<AudioSource>().outputAudioMixerGroup.audioMixer.SetFloat("BossLevelVol", -80f); //Boss Level
+
+            this.GetComponent<AudioSource>().outputAudioMixerGroup.audioMixer.SetFloat("MenuVol", SoundManager.MusicVolume);
         }
 
+        if(AudioMenu.activeInHierarchy)
+            this.GetComponent<AudioSource>().outputAudioMixerGroup.audioMixer.SetFloat("MenuVol", SoundManager.MusicVolume);
 
     }
 
     public void StartGame()
     {
-        //this.GetComponent<AudioSource>().outputAudioMixerGroup.audioMixer.SetFloat("MasterVol", -80f);
-        //this.GetComponent<AudioSource>().outputAudioMixerGroup.audioMixer.SetFloat("MenuVol", -80f);
+        this.GetComponent<AudioSource>().outputAudioMixerGroup.audioMixer.SetFloat("MenuVol", -80f); //Menu
         MainMenu.SetActive(false);
         GameScreen.SetActive(true);
         Player.SetActive(true);
@@ -92,47 +99,70 @@ public class GameController : MonoBehaviour {
 
         Player.GetComponent<KratusControl>().GameScreenOn = true;
         Player.GetComponent<KratusControl>().NormalLevel.SetActive(true);
-
+        Player.GetComponent<KratusControl>().NormalLevel.GetComponent<NormalLevel>().Start();
+        Player.GetComponent<Animator>().avatar = Player.GetComponent<KratusControl>().DefaultAvatar;
     }
 
     public void Pause()
     {
-        //this.GetComponent<AudioSource>().outputAudioMixerGroup.audioMixer.SetFloat("MasterVol", 0f);
-        //this.GetComponent<AudioSource>().outputAudioMixerGroup.audioMixer.SetFloat("MenuVol", 0f);
+        Player.GetComponent<KratusControl>().NormalLevel.GetComponent<AudioSource>().outputAudioMixerGroup.audioMixer.SetFloat("NormalLevelVol", -80f); //Normal Level
+        Player.GetComponent<KratusControl>().BossLevel.GetComponent<AudioSource>().outputAudioMixerGroup.audioMixer.SetFloat("BossLevelVol", -80f); //Boss Level
+
+        this.GetComponent<AudioSource>().outputAudioMixerGroup.audioMixer.SetFloat("MenuVol", SoundManager.MusicVolume);
         GameScreen.SetActive(false);
         GamePauseScreen.SetActive(true);
+   
         Player.GetComponent<Invector.CharacterController.vThirdPersonController>().enabled = false;
         Player.GetComponent<Invector.CharacterController.vThirdPersonInput>().enabled = false;
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.Confined;
         Player.GetComponent<KratusControl>().GameScreenOn = false;
+
+        Player.SetActive(false);
     }
 
     public void Resume()
     {
-        //this.GetComponent<AudioSource>().outputAudioMixerGroup.audioMixer.SetFloat("MasterVol", -80f);
-        //this.GetComponent<AudioSource>().outputAudioMixerGroup.audioMixer.SetFloat("MenuVol", -80f);
+        Player.SetActive(true);
+        this.GetComponent<AudioSource>().outputAudioMixerGroup.audioMixer.SetFloat("MenuVol", -80f);
         GameScreen.SetActive(true);
         GamePauseScreen.SetActive(false);
         Player.GetComponent<Invector.CharacterController.vThirdPersonController>().enabled = true;
         Player.GetComponent<Invector.CharacterController.vThirdPersonInput>().enabled = true;
         Player.GetComponent<KratusControl>().GameScreenOn = true;
 
+        if (Player.GetComponent<KratusControl>().NormalLevel.activeInHierarchy)
+        {
+            Player.GetComponent<KratusControl>().NormalLevel.GetComponent<AudioSource>().outputAudioMixerGroup.audioMixer.SetFloat("NormalLevelVol", SoundManager.MusicVolume); //Normal Level
+        }
+        else if (Player.GetComponent<KratusControl>().BossLevel.activeInHierarchy)
+        {
+            Player.GetComponent<KratusControl>().BossLevel.GetComponent<AudioSource>().outputAudioMixerGroup.audioMixer.SetFloat("BossLevelVol", SoundManager.MusicVolume); //Boss Level
+        }
+
     }
 
     public void RestartLevel()
     {
+        Player.SetActive(true);
+        Player.GetComponent<Invector.CharacterController.vThirdPersonController>().enabled = true;
+        Player.GetComponent<Invector.CharacterController.vThirdPersonInput>().enabled = true;
+        this.GetComponent<AudioSource>().outputAudioMixerGroup.audioMixer.SetFloat("MenuVol", -80f);
+
         if (Player.GetComponent<KratusControl>().NormalLevel.activeInHierarchy)
         {
-
             Player.GetComponent<KratusControl>().NormalLevel.GetComponent<NormalLevel>().Start();
             Player.GetComponent<Animator>().avatar = Player.GetComponent<KratusControl>().DefaultAvatar;
+            Player.GetComponent<KratusControl>().NormalLevel.GetComponent<AudioSource>().outputAudioMixerGroup.audioMixer.SetFloat("NormalLevelVol", SoundManager.MusicVolume); //Normal Level
+
         }
         else if (Player.GetComponent<KratusControl>().BossLevel.activeInHierarchy)
         {
            
             Player.GetComponent<KratusControl>().BossLevel.GetComponentInChildren<BossLevel>().Start();
             Player.GetComponent<Animator>().avatar = Player.GetComponent<KratusControl>().DefaultAvatar;
+            Player.GetComponent<KratusControl>().BossLevel.GetComponent<AudioSource>().outputAudioMixerGroup.audioMixer.SetFloat("BossLevelVol", SoundManager.MusicVolume); //Boss Level
+
         }
         GameOverScreen.SetActive(false);
         GamePauseScreen.SetActive(false);
