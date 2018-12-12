@@ -46,6 +46,7 @@ public class WeaponAttack : MonoBehaviour {
             {
                 //Destroy(other.gameObject); // Animation Dying
                 other.gameObject.GetComponent<Animator>().SetTrigger("Dying");
+                other.gameObject.GetComponent<UnityStandardAssets.Characters.ThirdPerson.ThirdPersonCharacter>().m_MoveSpeedMultiplier = 0;
                 other.gameObject.GetComponent<UnityStandardAssets.Characters.ThirdPerson.AICharacterControl>().target = null;
                 other.gameObject.GetComponents<AudioSource>()[0].Play(); // Death Sound
                 other.gameObject.GetComponents<AudioSource>()[2].enabled = false; //Walking

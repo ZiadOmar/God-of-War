@@ -62,15 +62,28 @@ public class KratusControl : MonoBehaviour {
     public Sound SoundManager;
 
     // Use this for initialization
-    void Start()
+    public void Start()
     {
         Sword.SetActive(true);
         Axe.SetActive(false);
-       
+
+        KratosHealthPoints = 100;
+        MaxHealthPoints = 100;
+        KratosRageLevel = 0;
+        KratosCurrentLevel = 1;
+        KratosXP = 0;
+        KratosMaxLevelXP = 500;
+        KratosSkillPoints = 0;
+
+        KratosDamagePoints = 0;
+        KratosLightAttackDamage = 10;
+        KratosHeavyAttackDamage = 30;
+
+        Dead = false;
     }
 
-    // Update is called once per frame
-    void Update()
+// Update is called once per frame
+void Update()
     {
       if(this.GetComponent<Invector.CharacterController.vThirdPersonController>().input.x == 0 
         && this.GetComponent<Invector.CharacterController.vThirdPersonController>().input.y == 0)
@@ -257,6 +270,8 @@ public class KratusControl : MonoBehaviour {
     {
         yield return new WaitForSecondsRealtime(4f);
         BossDefeated = true;
+        BossLevel.GetComponent<AudioSource>().outputAudioMixerGroup.audioMixer.SetFloat("BossLevelVol", -80f); //Boss Level
+
     }
 
 

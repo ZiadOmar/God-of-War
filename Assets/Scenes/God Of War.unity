@@ -1397,7 +1397,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &127001775
 Transform:
   m_ObjectHideFlags: 0
@@ -1421,10 +1421,10 @@ BoxCollider:
   m_GameObject: {fileID: 127001774}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
-  m_Size: {x: 0.88786745, y: 0.6486875, z: 1.1460669}
-  m_Center: {x: 0.42193636, y: -0.45935658, z: 0.073033795}
+  m_Size: {x: 0.8878674, y: 0.43758905, z: 1.1059909}
+  m_Center: {x: 0.42193708, y: -0.35380924, z: 0.09286688}
 --- !u!23 &127001777
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -16075,7 +16075,7 @@ Rigidbody:
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 14
   m_CollisionDetection: 0
 --- !u!136 &625415692
 CapsuleCollider:
@@ -16086,10 +16086,10 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 6.4415617
-  m_Height: 5.1417913
-  m_Direction: 1
-  m_Center: {x: 0.0000038146973, y: -1.110223e-16, z: 0.00000001490116}
+  m_Radius: 2.203467
+  m_Height: 13.641629
+  m_Direction: 0
+  m_Center: {x: 0.37925386, y: 0.0000000067797057, z: -0.0000000011039589}
 --- !u!1001 &626588271
 Prefab:
   m_ObjectHideFlags: 0
@@ -24214,6 +24214,7 @@ GameObject:
   - component: {fileID: 833789838}
   - component: {fileID: 833789837}
   - component: {fileID: 833789836}
+  - component: {fileID: 833789839}
   m_Layer: 0
   m_Name: FlameThrower (3)
   m_TagString: Obstacles
@@ -24248,10 +24249,10 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 1.1767128
-  m_Height: 15.248484
+  m_Radius: 1.6282563
+  m_Height: 14.649441
   m_Direction: 2
-  m_Center: {x: 0.0020861726, y: -0.3026204, z: 3.09}
+  m_Center: {x: -0.17340934, y: 0.0000000011819988, z: 0.66537666}
 --- !u!199 &833789837
 ParticleSystemRenderer:
   serializedVersion: 6
@@ -28853,6 +28854,21 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     vectorLabel1_3: W
+--- !u!54 &833789839
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 833789834}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 126
+  m_CollisionDetection: 0
 --- !u!1 &839235894
 GameObject:
   m_ObjectHideFlags: 0
@@ -30005,6 +30021,7 @@ MonoBehaviour:
   WeakPoint3: 0
   BossLevelStartPosition: {fileID: 187978888}
   Kratos: {fileID: 1360299596}
+  LegAttack: {fileID: 127001774}
   SoundManager: {fileID: 870307599}
 --- !u!195 &897980474
 NavMeshAgent:
@@ -30039,9 +30056,9 @@ CapsuleCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   m_Radius: 0.3
-  m_Height: 1.6
+  m_Height: 1.5218294
   m_Direction: 1
-  m_Center: {x: 0, y: 0.8, z: 0}
+  m_Center: {x: 0, y: 0.83908546, z: 0}
 --- !u!54 &897980476
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -30085,7 +30102,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 897980470}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.48, y: -27.65, z: 512.095}
+  m_LocalPosition: {x: -0.48, y: -27.54, z: 508.1}
   m_LocalScale: {x: 3, y: 3, z: 3}
   m_Children:
   - {fileID: 67508748}
@@ -50771,8 +50788,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.4806826, y: 0.9594229, z: 1.3963928}
-  m_Center: {x: 0.15882696, y: 0.10038284, z: -0.3942104}
+  m_Size: {x: 0.35927865, y: 0.95942134, z: 1.3963928}
+  m_Center: {x: 0.09812475, y: 0.1003832, z: -0.39420834}
 --- !u!23 &997775545
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -58155,7 +58172,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1233760825
 Transform:
   m_ObjectHideFlags: 0
@@ -60928,6 +60945,7 @@ GameObject:
   - component: {fileID: 1416098626}
   - component: {fileID: 1416098625}
   - component: {fileID: 1416098624}
+  - component: {fileID: 1416098627}
   m_Layer: 0
   m_Name: FlameThrower (2)
   m_TagString: Obstacles
@@ -60962,10 +60980,10 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 1.5371416
-  m_Height: 15.499821
+  m_Radius: 1.6282563
+  m_Height: 15.32327
   m_Direction: 2
-  m_Center: {x: -0.22, y: -0.39548302, z: 5.005871}
+  m_Center: {x: -0.17340896, y: -7.6586515e-12, z: 1.0022913}
 --- !u!199 &1416098625
 ParticleSystemRenderer:
   serializedVersion: 6
@@ -65567,6 +65585,21 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     vectorLabel1_3: W
+--- !u!54 &1416098627
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1416098622}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 126
+  m_CollisionDetection: 0
 --- !u!1 &1428887802
 GameObject:
   m_ObjectHideFlags: 0
@@ -100902,7 +100935,7 @@ Rigidbody:
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 14
   m_CollisionDetection: 0
 --- !u!136 &1952775122
 CapsuleCollider:
@@ -100913,10 +100946,10 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 6.441561
-  m_Height: 5.141792
-  m_Direction: 1
-  m_Center: {x: 0.0000038146973, y: 0, z: 0.000000014901161}
+  m_Radius: 2.203467
+  m_Height: 13.641629
+  m_Direction: 0
+  m_Center: {x: 0.37925386, y: 0.0000000067797057, z: -0.0000000011039589}
 --- !u!1 &1963287283
 GameObject:
   m_ObjectHideFlags: 0
@@ -101915,6 +101948,7 @@ GameObject:
   - component: {fileID: 2064684609}
   - component: {fileID: 2064684608}
   - component: {fileID: 2064684607}
+  - component: {fileID: 2064684610}
   m_Layer: 0
   m_Name: FlameThrower (1)
   m_TagString: Obstacles
@@ -101949,10 +101983,10 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 1.0826625
-  m_Height: 15.524223
+  m_Radius: 1.6282563
+  m_Height: 15.089121
   m_Direction: 2
-  m_Center: {x: -0.32, y: -0.343215, z: 4.966895}
+  m_Center: {x: -0.17340933, y: -6.640876e-10, z: 0.8852168}
 --- !u!199 &2064684608
 ParticleSystemRenderer:
   serializedVersion: 6
@@ -106554,6 +106588,21 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     vectorLabel1_3: W
+--- !u!54 &2064684610
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2064684605}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 126
+  m_CollisionDetection: 0
 --- !u!1 &2072740964
 GameObject:
   m_ObjectHideFlags: 0
@@ -112249,8 +112298,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1.0940471, y: 1, z: 0.99999964}
-  m_Center: {x: 0.047023643, y: -0.00000004438298, z: -0.000000025715485}
+  m_Size: {x: 0.94367063, y: 1, z: 0.99999976}
+  m_Center: {x: 0.1222122, y: -0.00000010652622, z: -0.00000007704927}
 --- !u!23 &2139969762
 MeshRenderer:
   m_ObjectHideFlags: 0

@@ -28,6 +28,7 @@ public class BossLevel : MonoBehaviour {
     public GameObject BossLevelStartPosition;
     public GameObject Kratos;
 
+    public GameObject LegAttack;
 
     //Sound
     public Sound SoundManager;
@@ -97,6 +98,7 @@ public class BossLevel : MonoBehaviour {
                     {
                         this.gameObject.GetComponent<Animator>().SetBool("Head attack", false);
                         this.gameObject.GetComponent<Animator>().SetBool("Hand attack", false);
+                        LegAttack.GetComponent<BoxCollider>().enabled = true;
                         this.gameObject.GetComponent<Animator>().SetBool("Leg attack", true);
                         attack = false;
                     }
@@ -119,6 +121,7 @@ public class BossLevel : MonoBehaviour {
             this.gameObject.GetComponent<Animator>().SetBool("Hand attack", false);
             this.gameObject.GetComponent<Animator>().SetBool("Leg attack", false);
 
+            LegAttack.GetComponent<BoxCollider>().enabled = false;
 
             Debug.Log("Attack Chosen:" + RandomAttack);
         

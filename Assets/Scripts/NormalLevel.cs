@@ -76,7 +76,7 @@ public class NormalLevel : MonoBehaviour {
         }
 
 
-        if (kratos.GetComponent<KratusControl>().enemyAttackers == 5)
+        if (kratos.GetComponent<KratusControl>().enemyAttackers == 4)
         {
             if (Wave1)
             {

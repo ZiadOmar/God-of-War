@@ -14,10 +14,35 @@ public class Cheats : MonoBehaviour {
     void Start () {
 		
 	}
-	
-	// Update is called once per frame
-	void Update () {
 
+    // Update is called once per frame
+    void Update()
+    {
+
+
+
+        if (Input.GetKeyDown(KeyCode.Alpha1)) //Fill Health
+        {
+            Kratos.KratosHealthPoints = Kratos.MaxHealthPoints;
+        }
+
+        if (Input.GetKeyDown(KeyCode.Alpha2)) //Fill XP
+        {
+            Kratos.KratosXP = Kratos.KratosMaxLevelXP;
+            Kratos.KratosCurrentLevel++;
+            Kratos.KratosMaxLevelXP *= 2;
+            Kratos.KratosSkillPoints++;
+        }
+
+        if (Input.GetKeyDown(KeyCode.Alpha3)) //Add Skill Points
+        {
+            Kratos.KratosSkillPoints++;
+        }
+
+        if (Input.GetKeyDown(KeyCode.Alpha4)) //Fill Rage
+        {
+            Kratos.KratosRageLevel = 10;
+        }
 
         if (Input.GetKeyDown(KeyCode.F1)) //Finish Obstacle Room 1
         {
@@ -96,9 +121,106 @@ public class Cheats : MonoBehaviour {
             Kratos.transform.position = BossLevel.BossLevelStartPosition.transform.position;
         }
 
-        //if (Input.GetKeyDown(KeyCode.F3)) //Kill Enemy
-        //    Kratos.XPIncAndCheckForLevelUp();
+        if (Input.GetKeyDown(KeyCode.F8)) //Kill Running Enemy
+        {
+            if (NormalLevel.Wave1)
+            {
+                NormalLevel.Wave1Enemies[Kratos.enemyAttackers].GetComponent<Enemy>().EnemyHealthPoints = 0;
+                NormalLevel.Wave1Enemies[Kratos.enemyAttackers].GetComponent<UnityStandardAssets.Characters.ThirdPerson.ThirdPersonCharacter>().m_MoveSpeedMultiplier = 0;
+                NormalLevel.Wave1Enemies[Kratos.enemyAttackers].GetComponent<UnityStandardAssets.Characters.ThirdPerson.AICharacterControl>().target = null;
+                NormalLevel.Wave1Enemies[Kratos.enemyAttackers].GetComponent<Animator>().SetTrigger("Dying");
+
+                NormalLevel.Wave1Enemies[Kratos.enemyAttackers].GetComponents<AudioSource>()[0].Play(); // Death Sound
+                NormalLevel.Wave1Enemies[Kratos.enemyAttackers].GetComponents<AudioSource>()[2].enabled = false; //Walking
+                NormalLevel.Wave1Enemies[Kratos.enemyAttackers].GetComponents<AudioSource>()[3].enabled = false; //Voice Over
+
+                Kratos.XPIncAndCheckForLevelUp();
+                Kratos.enemyAttackers++;
+                Kratos.GetComponentInChildren<WeaponAttack>().instNextEnemy = true;
+            }
+            else if (NormalLevel.Wave2)
+            {
+                NormalLevel.Wave2Enemies[Kratos.enemyAttackers].GetComponent<Enemy>().EnemyHealthPoints = 0;
+                NormalLevel.Wave2Enemies[Kratos.enemyAttackers].GetComponent<UnityStandardAssets.Characters.ThirdPerson.ThirdPersonCharacter>().m_MoveSpeedMultiplier = 0;
+                NormalLevel.Wave2Enemies[Kratos.enemyAttackers].GetComponent<Animator>().SetTrigger("Dying");
+                NormalLevel.Wave2Enemies[Kratos.enemyAttackers].GetComponent<UnityStandardAssets.Characters.ThirdPerson.AICharacterControl>().target = null;
+                NormalLevel.Wave2Enemies[Kratos.enemyAttackers].GetComponents<AudioSource>()[0].Play(); // Death Sound
+                NormalLevel.Wave2Enemies[Kratos.enemyAttackers].GetComponents<AudioSource>()[2].enabled = false; //Walking
+                NormalLevel.Wave2Enemies[Kratos.enemyAttackers].GetComponents<AudioSource>()[3].enabled = false; //Voice Over
+
+                Kratos.XPIncAndCheckForLevelUp();
+                Kratos.enemyAttackers++;
+                Kratos.GetComponentInChildren<WeaponAttack>().instNextEnemy = true;
+            }
+
+            else if (NormalLevel.Wave3)
+            {
+                NormalLevel.Wave3Enemies[Kratos.enemyAttackers].GetComponent<Enemy>().EnemyHealthPoints = 0;
+                NormalLevel.Wave3Enemies[Kratos.enemyAttackers].GetComponent<UnityStandardAssets.Characters.ThirdPerson.ThirdPersonCharacter>().m_MoveSpeedMultiplier = 0;
+                NormalLevel.Wave3Enemies[Kratos.enemyAttackers].GetComponent<Animator>().SetTrigger("Dying");
+                NormalLevel.Wave3Enemies[Kratos.enemyAttackers].GetComponent<UnityStandardAssets.Characters.ThirdPerson.AICharacterControl>().target = null;
+                NormalLevel.Wave3Enemies[Kratos.enemyAttackers].GetComponents<AudioSource>()[0].Play(); // Death Sound
+                NormalLevel.Wave3Enemies[Kratos.enemyAttackers].GetComponents<AudioSource>()[2].enabled = false; //Walking
+                NormalLevel.Wave3Enemies[Kratos.enemyAttackers].GetComponents<AudioSource>()[3].enabled = false; //Voice Over
+
+                Kratos.XPIncAndCheckForLevelUp();
+                Kratos.enemyAttackers++;
+                Kratos.GetComponentInChildren<WeaponAttack>().instNextEnemy = true;
+            }
+        }
 
 
+        if (Input.GetKeyDown(KeyCode.F9)) //Kill Fire Enemy
+        {
+            if (NormalLevel.Wave1)
+            {
+                NormalLevel.Wave1Enemies[Kratos.enemyAttackers].GetComponent<LongRangeEnemy>().EnemyHealthPoints = 0;
+                NormalLevel.Wave1Enemies[Kratos.enemyAttackers].GetComponent<Animator>().SetTrigger("Dying");
+                NormalLevel.Wave1Enemies[Kratos.enemyAttackers].GetComponent<LongRangeEnemy>().FireManDead = true;
+                NormalLevel.Wave1Enemies[Kratos.enemyAttackers].GetComponents<AudioSource>()[0].Play(); // Death Sound
+                NormalLevel.Wave1Enemies[Kratos.enemyAttackers].GetComponents<AudioSource>()[2].enabled = false; //Voice Over
+
+                Kratos.XPIncAndCheckForLevelUp();
+                Kratos.enemyAttackers++;
+                Kratos.GetComponentInChildren<WeaponAttack>().instNextEnemy = true;
+            }
+            else if (NormalLevel.Wave2)
+            {
+                NormalLevel.Wave2Enemies[Kratos.enemyAttackers].GetComponent<LongRangeEnemy>().EnemyHealthPoints = 0;
+                NormalLevel.Wave2Enemies[Kratos.enemyAttackers].GetComponent<Animator>().SetTrigger("Dying");
+                NormalLevel.Wave2Enemies[Kratos.enemyAttackers].GetComponent<LongRangeEnemy>().FireManDead = true;
+                NormalLevel.Wave2Enemies[Kratos.enemyAttackers].GetComponents<AudioSource>()[0].Play(); // Death Sound
+                NormalLevel.Wave2Enemies[Kratos.enemyAttackers].GetComponents<AudioSource>()[2].enabled = false; //Voice Over
+
+                Kratos.XPIncAndCheckForLevelUp();
+                Kratos.enemyAttackers++;
+                Kratos.GetComponentInChildren<WeaponAttack>().instNextEnemy = true;
+            }
+
+            else if (NormalLevel.Wave3)
+            {
+                NormalLevel.Wave3Enemies[Kratos.enemyAttackers].GetComponent<LongRangeEnemy>().EnemyHealthPoints = 0;
+                NormalLevel.Wave3Enemies[Kratos.enemyAttackers].GetComponent<Animator>().SetTrigger("Dying");
+                NormalLevel.Wave3Enemies[Kratos.enemyAttackers].GetComponent<LongRangeEnemy>().FireManDead = true;
+                NormalLevel.Wave3Enemies[Kratos.enemyAttackers].GetComponents<AudioSource>()[0].Play(); // Death Sound
+                NormalLevel.Wave3Enemies[Kratos.enemyAttackers].GetComponents<AudioSource>()[2].enabled = false; //Voice Over
+
+                Kratos.XPIncAndCheckForLevelUp();
+                Kratos.enemyAttackers++;
+                Kratos.GetComponentInChildren<WeaponAttack>().instNextEnemy = true;
+            }
+        }
+
+        if (Input.GetKeyDown(KeyCode.F10)) //Kill Boss
+        {
+            BossLevel.BossHealthPoints = 0;
+            BossLevel.gameObject.GetComponent<Animator>().SetTrigger("Dying");
+            BossLevel.gameObject.GetComponents<AudioSource>()[0].Play(); // Death Sound
+            BossLevel.gameObject.GetComponents<AudioSource>()[2].outputAudioMixerGroup.audioMixer.SetFloat("EnemyWalkVol", -80f); //Walking
+            BossLevel.gameObject.GetComponents<AudioSource>()[3].outputAudioMixerGroup.audioMixer.SetFloat("VoiceOverVol", -80f); //Voice Over
+            BossLevel.gameObject.GetComponent<UnityStandardAssets.Characters.ThirdPerson.AICharacterControl>().target = null;
+            //Credits Roll
+            Kratos.BossIsDefeated();
+        }
     }
 }

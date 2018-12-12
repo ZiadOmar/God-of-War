@@ -149,6 +149,7 @@ public class GameController : MonoBehaviour {
         Player.GetComponent<Invector.CharacterController.vThirdPersonInput>().enabled = true;
         this.GetComponent<AudioSource>().outputAudioMixerGroup.audioMixer.SetFloat("MenuVol", -80f);
 
+        Player.GetComponent<KratusControl>().Start();
         if (Player.GetComponent<KratusControl>().NormalLevel.activeInHierarchy)
         {
             Player.GetComponent<KratusControl>().NormalLevel.GetComponent<NormalLevel>().Start();
