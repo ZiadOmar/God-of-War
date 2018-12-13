@@ -9,10 +9,10 @@ public class Cheats : MonoBehaviour {
     public BossLevel BossLevel;
 
     public GameObject BossLevelParent;
-
+    int i = 1;
     // Use this for initialization
     void Start () {
-		
+        i = 1;
 	}
 
     // Update is called once per frame
@@ -64,6 +64,8 @@ public class Cheats : MonoBehaviour {
             Kratos.transform.position = NormalLevel.ObstacleRoom2StartPosition.transform.position;
 
             Kratos.GetComponentInChildren<WeaponAttack>().instNextEnemy = true;
+
+            Kratos.GetComponent<Invector.CharacterController.vThirdPersonController>().jumpHeight = 12;
         }
 
 
@@ -73,6 +75,7 @@ public class Cheats : MonoBehaviour {
             NormalLevel.Wave2Level.SetActive(true);
             NormalLevel.Wave2 = true;
             Kratos.transform.position = NormalLevel.Wave2LevelStartPosition.transform.position;
+            Kratos.GetComponent<Invector.CharacterController.vThirdPersonController>().jumpHeight = 5;
         }
 
         if (Input.GetKeyDown(KeyCode.F4)) //Finish Wave2
@@ -119,6 +122,8 @@ public class Cheats : MonoBehaviour {
             NormalLevel.GetComponent<AudioSource>().outputAudioMixerGroup.audioMixer.SetFloat("NormalLevelVol", -80f); //Normal Level
             BossLevelParent.GetComponent<AudioSource>().outputAudioMixerGroup.audioMixer.SetFloat("BossLevelVol", BossLevel.SoundManager.MusicVolume); //Boss Level
             Kratos.transform.position = BossLevel.BossLevelStartPosition.transform.position;
+            NormalLevel.NormalLevelON = false;
+            Kratos.GetComponent<Invector.CharacterController.vThirdPersonController>().jumpHeight = 5;
         }
 
         if (Input.GetKeyDown(KeyCode.F8)) //Kill Running Enemy
@@ -211,7 +216,71 @@ public class Cheats : MonoBehaviour {
             }
         }
 
-        if (Input.GetKeyDown(KeyCode.F10)) //Kill Boss
+        if (Input.GetKeyDown(KeyCode.F10)) //Finish Normal Level
+        {
+            foreach (GameObject Enemy in NormalLevel.Wave1Enemies)
+            {
+                Enemy.SetActive(false);
+            }
+
+            foreach (GameObject Enemy in NormalLevel.Wave2Enemies)
+            {
+                Enemy.SetActive(false);
+            }
+
+            foreach (GameObject Enemy in NormalLevel.Wave3Enemies)
+            {
+                Enemy.SetActive(false);
+            }
+            NormalLevel.Wave1 = false;
+            NormalLevel.Wave2 = false;
+            NormalLevel.Wave3 = false;
+            NormalLevel.WaveRoomsEnd[0].SetActive(false);
+            NormalLevel.WaveRoomsEnd[1].SetActive(false);
+            NormalLevel.WaveRoomsEnd[2].SetActive(false);
+
+            NormalLevel.ObstacleRoom1.SetActive(true);
+            NormalLevel.ObstacleRoom2.SetActive(true);
+            NormalLevel.ObstacleRoom3.SetActive(true);
+            NormalLevel.ObstacleRoom4.SetActive(true);
+
+            Kratos.GetComponent<KratusControl>().enemyAttackers = 0;
+            NormalLevel.NormalLevelON = false;
+            BossLevelParent.SetActive(true);
+            NormalLevel.GetComponent<AudioSource>().outputAudioMixerGroup.audioMixer.SetFloat("NormalLevelVol", -80f); //Normal Level
+            BossLevelParent.GetComponent<AudioSource>().outputAudioMixerGroup.audioMixer.SetFloat("BossLevelVol", BossLevel.SoundManager.MusicVolume); //Boss Level
+            Kratos.transform.position = BossLevel.BossLevelStartPosition.transform.position;
+            Kratos.GetComponent<Invector.CharacterController.vThirdPersonController>().jumpHeight = 5;
+        }
+
+            if (Input.GetKeyDown(KeyCode.F11)) //Kill Boss Components
+        {
+            if (BossLevel.WeakPoint1 != 3 && i==1)
+            {
+                BossLevel.WeakPoint1 = 3;
+                BossLevel.HeadAttack.GetComponent<BoxCollider>().enabled = false;
+                Kratos.GetComponentInChildren<WeaponAttack>().BossStunned();
+                i++;
+            }
+
+            else if (BossLevel.WeakPoint2 != 3 && i == 2)
+            {
+                BossLevel.WeakPoint2 = 3;
+                BossLevel.HandAttack.GetComponent<BoxCollider>().enabled = false;
+                Kratos.GetComponentInChildren<WeaponAttack>().BossStunned();
+                i++;
+            }
+
+            else if (BossLevel.WeakPoint3 != 3 && i == 3)
+            {
+                BossLevel.WeakPoint3 = 3;
+                BossLevel.LegAttack.GetComponent<BoxCollider>().enabled = false;
+                Kratos.GetComponentInChildren<WeaponAttack>().BossStunned();
+                i++;
+            }
+        }
+
+        if (Input.GetKeyDown(KeyCode.F12)) //Kill Boss
         {
             BossLevel.BossHealthPoints = 0;
             BossLevel.gameObject.GetComponent<Animator>().SetTrigger("Dying");

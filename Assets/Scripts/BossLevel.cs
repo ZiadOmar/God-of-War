@@ -28,7 +28,14 @@ public class BossLevel : MonoBehaviour {
     public GameObject BossLevelStartPosition;
     public GameObject Kratos;
 
+    public GameObject HeadAttack;
     public GameObject LegAttack;
+    public GameObject HandAttack;
+
+    public GameObject HeadHelmet;
+    public GameObject LegShield;
+    public GameObject HandShield;
+
 
     //Sound
     public Sound SoundManager;
@@ -42,6 +49,15 @@ public class BossLevel : MonoBehaviour {
         this.gameObject.GetComponent<Animator>().SetFloat("Forward", this.gameObject.GetComponent<NavMeshAgent>().remainingDistance);
         this.GetComponents<AudioSource>()[2].outputAudioMixerGroup.audioMixer.SetFloat("EnemyWalkVol", SoundManager.SFXVolume); //Walking
         this.GetComponents<AudioSource>()[3].outputAudioMixerGroup.audioMixer.SetFloat("VoiceOverVol", SoundManager.SpeechVolume); //Voice Over
+
+        HeadAttack.GetComponent<BoxCollider>().enabled = true;
+        HandAttack.GetComponent<BoxCollider>().enabled = true;
+        LegAttack.GetComponent<BoxCollider>().enabled = false;
+
+        HeadHelmet.SetActive(true);
+        LegShield.SetActive(true);
+        HandShield.SetActive(true);
+
     }
 	
    // Update is called once per frame
@@ -64,14 +80,25 @@ public class BossLevel : MonoBehaviour {
             RandomAttack = (int)Random.Range(0.0f, 3.0f);
 
             if (WeakPoint1 == 3 && RandomAttack == 0)
+            {
                 BossAttacksNotAllowed[0] = true;
+                HeadAttack.GetComponent<BoxCollider>().enabled = false;
+                HeadHelmet.SetActive(false);
+            }
 
             else if (WeakPoint2 == 3 && RandomAttack == 1)
+            {
                 BossAttacksNotAllowed[1] = true;
+                HandAttack.GetComponent<BoxCollider>().enabled = false;
+                HandShield.SetActive(false);
 
+            }
             else if (WeakPoint3 == 3 && RandomAttack == 2)
-                BossAttacksNotAllowed[2] = true;
-
+            {
+               BossAttacksNotAllowed[2] = true;
+               LegAttack.GetComponent<BoxCollider>().enabled = false;
+               LegShield.SetActive(false);
+            }
 
             switch (RandomAttack)
                 {

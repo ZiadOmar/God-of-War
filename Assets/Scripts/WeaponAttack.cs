@@ -60,6 +60,8 @@ public class WeaponAttack : MonoBehaviour {
             other.gameObject.GetComponent<Enemy>().EnemyHealthPoints = enemyHealthPoints;
             Kratos.lightAttack = false;
             Kratos.heavyAttack = false;
+
+            Kratos.GetComponent<Animator>().avatar = Kratos.DefaultAvatar;
         }
 
         // if Sword hit the fire enemy
@@ -151,7 +153,8 @@ public class WeaponAttack : MonoBehaviour {
             WeakPoint1++;
             if (WeakPoint1 == 3)
             {
-                //Destroy(other.gameObject);
+                Boss.GetComponent<BossLevel>().HeadHelmet.SetActive(false);
+                other.gameObject.GetComponent<BoxCollider>().enabled = false;
                 //Stunning
                 BossStunned();
             }
@@ -197,7 +200,8 @@ public class WeaponAttack : MonoBehaviour {
             WeakPoint2++;
             if (WeakPoint2 == 3)
             {
-                //Destroy(other.gameObject);
+                Boss.GetComponent<BossLevel>().HandShield.SetActive(false);
+                other.gameObject.GetComponent<BoxCollider>().enabled = false;
                 //Stunning
                 BossStunned();
             }
@@ -245,7 +249,8 @@ public class WeaponAttack : MonoBehaviour {
             WeakPoint3++;
             if (WeakPoint3 == 3)
             {
-                //Destroy(other.gameObject);
+                Boss.GetComponent<BossLevel>().LegShield.SetActive(false);
+                other.gameObject.GetComponent<BoxCollider>().enabled = false;
                 //Stunning
                 BossStunned();
             }
@@ -273,7 +278,7 @@ public class WeaponAttack : MonoBehaviour {
         }
     }
 
-    private void BossStunned()
+    public void BossStunned()
     {
         Boss.GetComponent<UnityStandardAssets.Characters.ThirdPerson.ThirdPersonCharacter>().m_AnimSpeedMultiplier = 0;
         Boss.GetComponent<UnityStandardAssets.Characters.ThirdPerson.ThirdPersonCharacter>().m_MoveSpeedMultiplier = 0;

@@ -80,10 +80,12 @@ public class KratusControl : MonoBehaviour {
         KratosHeavyAttackDamage = 30;
 
         Dead = false;
+        this.GetComponent<Invector.CharacterController.vThirdPersonController>().jumpHeight = 5;
+
     }
 
-// Update is called once per frame
-void Update()
+    // Update is called once per frame
+    void Update()
     {
       if(this.GetComponent<Invector.CharacterController.vThirdPersonController>().input.x == 0 
         && this.GetComponent<Invector.CharacterController.vThirdPersonController>().input.y == 0)
@@ -127,7 +129,17 @@ void Update()
 
                 RagePb.BarValue = KratosRageLevel;
                 RagePb.MaxValue = 10;
-          }
+
+            if (KratosHealthPoints <= 0)
+            {
+                //GameOver
+                GameOver = true;
+                this.GetComponent<Animator>().avatar = DyingAvatar;
+                this.GetComponent<Animator>().CrossFadeInFixedTime("Dying", 0.05f);
+                this.GetComponents<AudioSource>()[1].Play();
+            }
+        }
+
     }
 
    
@@ -227,15 +239,20 @@ void Update()
 
     }
      
-    public void UpgradeMovement() // ##########
+    public void UpgradeMovement() 
     {
         if (KratosSkillPoints != 0)
         {
             KratosSkillPoints--;
-            //this.GetComponent<Invector.CharacterController.vThirdPersonMotor>().speed *= 10;
-            // Invector speed inc #######
-            //this.GetComponent<Rigidbody>().velocity *= 2;
-     
+            float PlayerWalkSpeed = this.GetComponent<Invector.CharacterController.vThirdPersonController>().freeRunningSpeed;
+            float PlayerSprintSpeed = this.GetComponent<Invector.CharacterController.vThirdPersonController>().freeSprintSpeed;
+
+
+            PlayerWalkSpeed += (float)(PlayerWalkSpeed * 0.1);
+            PlayerSprintSpeed += (float)(PlayerSprintSpeed * 0.1);
+
+            this.GetComponent<Invector.CharacterController.vThirdPersonController>().freeRunningSpeed = PlayerWalkSpeed;
+            this.GetComponent<Invector.CharacterController.vThirdPersonController>().freeSprintSpeed = PlayerSprintSpeed;
         }  
 
     }
@@ -296,7 +313,7 @@ void Update()
         {
             NormalLevel.GetComponent<NormalLevel>().Wave2Level.SetActive(true);
             NormalLevel.GetComponent<NormalLevel>().Wave2 = true;
-         
+            this.GetComponent<Invector.CharacterController.vThirdPersonController>().jumpHeight = 5;
         }
 
         if (collision.gameObject.CompareTag("ObstacleRoom3Collider"))
@@ -308,6 +325,7 @@ void Update()
 
         if (collision.gameObject.CompareTag("ObstacleRoom4Collider"))
         {
+            NormalLevel.GetComponent<NormalLevel>().NormalLevelON = false;
             BossLevel.SetActive(true);
             NormalLevel.GetComponent<AudioSource>().outputAudioMixerGroup.audioMixer.SetFloat("NormalLevelVol", -80f); //Normal Level
             BossLevel.GetComponent<AudioSource>().outputAudioMixerGroup.audioMixer.SetFloat("BossLevelVol", SoundManager.MusicVolume); //Boss Level

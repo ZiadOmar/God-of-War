@@ -38,9 +38,12 @@ public class NormalLevel : MonoBehaviour {
     //Sound
     public Sound SoundManager;
 
+    public bool NormalLevelON;
+
     // Use this for initialization
     public void Start () {
 
+        NormalLevelON = true;
         this.GetComponent<AudioSource>().outputAudioMixerGroup.audioMixer.SetFloat("NormalLevelVol", SoundManager.MusicVolume); //Normal Level
 
         ObstacleRoom1.SetActive(true);
@@ -83,6 +86,7 @@ public class NormalLevel : MonoBehaviour {
                 Wave1 = false;
                 //Wave1Level.SetActive(false);
                 WaveRoomsEnd[0].SetActive(false);
+                kratos.GetComponent<Invector.CharacterController.vThirdPersonController>().jumpHeight = 12;
                 ObstacleRoom2.SetActive(true);
                 kratos.GetComponent<KratusControl>().enemyAttackers = 0;
             }

@@ -99,6 +99,7 @@ public class GameController : MonoBehaviour {
 
         Player.GetComponent<KratusControl>().GameScreenOn = true;
         Player.GetComponent<KratusControl>().NormalLevel.SetActive(true);
+        Player.GetComponent<KratusControl>().BossLevel.SetActive(false);
         Player.GetComponent<KratusControl>().NormalLevel.GetComponent<NormalLevel>().Start();
         Player.GetComponent<Animator>().avatar = Player.GetComponent<KratusControl>().DefaultAvatar;
     }
@@ -150,14 +151,14 @@ public class GameController : MonoBehaviour {
         this.GetComponent<AudioSource>().outputAudioMixerGroup.audioMixer.SetFloat("MenuVol", -80f);
 
         Player.GetComponent<KratusControl>().Start();
-        if (Player.GetComponent<KratusControl>().NormalLevel.activeInHierarchy)
+        if (Player.GetComponent<KratusControl>().NormalLevel.GetComponent<NormalLevel>().NormalLevelON)
         {
             Player.GetComponent<KratusControl>().NormalLevel.GetComponent<NormalLevel>().Start();
             Player.GetComponent<Animator>().avatar = Player.GetComponent<KratusControl>().DefaultAvatar;
             Player.GetComponent<KratusControl>().NormalLevel.GetComponent<AudioSource>().outputAudioMixerGroup.audioMixer.SetFloat("NormalLevelVol", SoundManager.MusicVolume); //Normal Level
 
         }
-        else if (Player.GetComponent<KratusControl>().BossLevel.activeInHierarchy)
+        else // Boss Level
         {
            
             Player.GetComponent<KratusControl>().BossLevel.GetComponentInChildren<BossLevel>().Start();
