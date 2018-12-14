@@ -35,6 +35,10 @@ public class NormalLevel : MonoBehaviour {
 
     public GameObject[] WaveRoomsEnd = new GameObject[3];
 
+    //Health Chests
+    public GameObject[] HealthChests = new GameObject[3];
+
+
     //Sound
     public Sound SoundManager;
 
@@ -53,12 +57,37 @@ public class NormalLevel : MonoBehaviour {
         ObstacleRoom3.SetActive(false);
         ObstacleRoom4.SetActive(false);
 
+        WaveRoomsEnd[0].SetActive(true);
+        WaveRoomsEnd[1].SetActive(true);
+        WaveRoomsEnd[2].SetActive(true);
+
         Wave1Level.SetActive(false);
         Wave2Level.SetActive(false);
         Wave3Level.SetActive(false);
         Wave1 = false;
         Wave2 = false;
         Wave3 = false;
+      
+        foreach (GameObject Enemy in Wave1Enemies)
+        {
+            Enemy.SetActive(false);
+        }
+
+        foreach (GameObject Enemy in Wave2Enemies)
+        {
+            Enemy.SetActive(false);
+        }
+
+        foreach (GameObject Enemy in Wave3Enemies)
+        {
+            Enemy.SetActive(false);
+        }
+
+        foreach (GameObject healthChest in HealthChests)
+        {
+            healthChest.SetActive(true);
+        }
+
     }
 
     // Update is called once per frame
@@ -121,11 +150,13 @@ public class NormalLevel : MonoBehaviour {
                 Vector3 EnemyPos = Wave1Enemies[kratos.GetComponent<KratusControl>().enemyAttackers].GetComponent<UnityStandardAssets.Characters.ThirdPerson.AICharacterControl>().transform.position;
                 fire.transform.position = new Vector3(EnemyPos.x, 1.22f, EnemyPos.z + 2f);
                 Wave1Enemies[kratos.GetComponent<KratusControl>().enemyAttackers].GetComponent<UnityStandardAssets.Characters.ThirdPerson.AICharacterControl>().target = kratos.transform;
+                Wave1Enemies[kratos.GetComponent<KratusControl>().enemyAttackers].GetComponent<Enemy>().Start();
             }
             else
             {
                 Vector3 EnemyPos = Wave1Enemies[kratos.GetComponent<KratusControl>().enemyAttackers].transform.position;
                 fire.transform.position = new Vector3(EnemyPos.x, 1.22f, EnemyPos.z + 2f);
+                Wave1Enemies[kratos.GetComponent<KratusControl>().enemyAttackers].GetComponent<LongRangeEnemy>().Start();
             }
             Wave1Enemies[kratos.GetComponent<KratusControl>().enemyAttackers].SetActive(true);
             fire.GetComponent<ParticleSystem>().Play();
@@ -144,11 +175,13 @@ public class NormalLevel : MonoBehaviour {
                 Vector3 EnemyPos = Wave2Enemies[kratos.GetComponent<KratusControl>().enemyAttackers].GetComponent<UnityStandardAssets.Characters.ThirdPerson.AICharacterControl>().transform.position;
                 fire.transform.position = new Vector3(EnemyPos.x, -26.61f, EnemyPos.z + 2f);
                 Wave2Enemies[kratos.GetComponent<KratusControl>().enemyAttackers].GetComponent<UnityStandardAssets.Characters.ThirdPerson.AICharacterControl>().target = kratos.transform;
+                Wave2Enemies[kratos.GetComponent<KratusControl>().enemyAttackers].GetComponent<Enemy>().Start();
             }
             else
             {
                 Vector3 EnemyPos = Wave2Enemies[kratos.GetComponent<KratusControl>().enemyAttackers].transform.position;
                 fire.transform.position = new Vector3(EnemyPos.x, -26.61f, EnemyPos.z + 2f);
+                Wave2Enemies[kratos.GetComponent<KratusControl>().enemyAttackers].GetComponent<LongRangeEnemy>().Start();
             }
             Wave2Enemies[kratos.GetComponent<KratusControl>().enemyAttackers].SetActive(true);
             fire.GetComponent<ParticleSystem>().Play();
@@ -168,11 +201,13 @@ public class NormalLevel : MonoBehaviour {
                 Vector3 EnemyPos = Wave3Enemies[kratos.GetComponent<KratusControl>().enemyAttackers].GetComponent<UnityStandardAssets.Characters.ThirdPerson.AICharacterControl>().transform.position;
                 fire.transform.position = new Vector3(EnemyPos.x, -26.61f, EnemyPos.z + 2f);
                 Wave3Enemies[kratos.GetComponent<KratusControl>().enemyAttackers].GetComponent<UnityStandardAssets.Characters.ThirdPerson.AICharacterControl>().target = kratos.transform;
+                Wave3Enemies[kratos.GetComponent<KratusControl>().enemyAttackers].GetComponent<Enemy>().Start();
             }
             else
             {
                 Vector3 EnemyPos = Wave3Enemies[kratos.GetComponent<KratusControl>().enemyAttackers].transform.position;
                 fire.transform.position = new Vector3(EnemyPos.x, -26.61f, EnemyPos.z + 2f);
+                Wave3Enemies[kratos.GetComponent<KratusControl>().enemyAttackers].GetComponent<LongRangeEnemy>().Start();
             }
             Wave3Enemies[kratos.GetComponent<KratusControl>().enemyAttackers].SetActive(true);
             fire.GetComponent<ParticleSystem>().Play();

@@ -5,13 +5,14 @@ using UnityEngine;
 
 public class LongRangeEnemy : MonoBehaviour
 {
+    public ProgressBar HealthPb;
     public double EnemyHealthPoints = 50;
     public string type;
     public GameObject Kratos;
 
     // Fire Man
     public GameObject firePrefab;
-    GameObject FireHand;
+    public GameObject FireHand;
 
     // Timer
     float timer = 0.0f;
@@ -23,15 +24,25 @@ public class LongRangeEnemy : MonoBehaviour
     public Sound SoundManager;
 
     // Use this for initialization
-    void Start()
+    public void Start()
     {
-        FireHand = GameObject.FindGameObjectWithTag("FireHand");
         this.GetComponents<AudioSource>()[2].outputAudioMixerGroup.audioMixer.SetFloat("VoiceOverVol", SoundManager.SpeechVolume); //Voice Over
+        EnemyHealthPoints = 50;
+        this.GetComponent<CapsuleCollider>().enabled = true;
+        this.GetComponents<AudioSource>()[2].enabled = true;
+
+        this.GetComponent<Animator>().SetTrigger("Restart");
+
+        FireManDead = false;
     }
 
     // Update is called once per frame
     void Update()
-    { 
+    {
+        if (Kratos.GetComponent<KratusControl>().GameScreenOn)
+        { 
+
+        HealthPb.BarValue = (int)EnemyHealthPoints;
         // 3 Seconds Time
         timer += Time.deltaTime;
         seconds = System.Convert.ToInt32(timer % 60);
@@ -46,7 +57,8 @@ public class LongRangeEnemy : MonoBehaviour
                 shootfire();
             }
         }
-    this.transform.LookAt(Kratos.transform);        
+         this.transform.LookAt(Kratos.transform);
+    }
     }
    
     public void shootfire()

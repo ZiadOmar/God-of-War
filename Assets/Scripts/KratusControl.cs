@@ -79,6 +79,8 @@ public class KratusControl : MonoBehaviour {
         KratosLightAttackDamage = 10;
         KratosHeavyAttackDamage = 30;
 
+        enemyAttackers = 0;
+
         Dead = false;
         this.GetComponent<Invector.CharacterController.vThirdPersonController>().jumpHeight = 5;
 
@@ -97,6 +99,9 @@ public class KratusControl : MonoBehaviour {
         {
             this.GetComponents<AudioSource>()[4].outputAudioMixerGroup.audioMixer.SetFloat("WalkingVOl", SoundManager.SFXVolume); //Walking
         }
+
+      if(KratosHealthPoints <= 0)
+            this.GetComponent<Animator>().avatar = DyingAvatar;
 
         if (GameScreenOn)
           { 
@@ -130,14 +135,7 @@ public class KratusControl : MonoBehaviour {
                 RagePb.BarValue = KratosRageLevel;
                 RagePb.MaxValue = 10;
 
-            if (KratosHealthPoints <= 0)
-            {
-                //GameOver
-                GameOver = true;
-                this.GetComponent<Animator>().avatar = DyingAvatar;
-                this.GetComponent<Animator>().CrossFadeInFixedTime("Dying", 0.05f);
-                this.GetComponents<AudioSource>()[1].Play();
-            }
+         
         }
 
     }
@@ -163,7 +161,6 @@ public class KratusControl : MonoBehaviour {
   
     private void LightAttackActivated()
     {
-        lightAttack = true;
         Sword.SetActive(true);
         Axe.SetActive(false);
         this.GetComponent<Animator>().avatar = LightAttackAvatar;
@@ -172,12 +169,11 @@ public class KratusControl : MonoBehaviour {
         Debug.Log("lightAttack");
         KratosDamagePoints = KratosLightAttackDamage;
 
-        StartCoroutine("WaitAWhile");
+        StartCoroutine("WaitForLightAttackAnim");
     }
 
     private void HeavyAttackActivated()
     {
-        heavyAttack = true;
         Sword.SetActive(false);
         Axe.SetActive(true);
         this.GetComponent<Animator>().avatar = HeavyAttackAvatar;
@@ -186,7 +182,7 @@ public class KratusControl : MonoBehaviour {
         Debug.Log("heavyAttack");
         KratosDamagePoints = KratosHeavyAttackDamage;
 
-        StartCoroutine("WaitAWhile");
+        StartCoroutine("WaitForHeavyAttackAnim");
     }
 
     private void RageActivated()
@@ -277,6 +273,20 @@ public class KratusControl : MonoBehaviour {
         heavyAttack = false;
     }
 
+    IEnumerator WaitForLightAttackAnim()
+    {
+        yield return new WaitForSecondsRealtime(2f);
+        lightAttack = true;
+        this.GetComponent<Animator>().avatar = DefaultAvatar;
+    }
+
+    IEnumerator WaitForHeavyAttackAnim()
+    {
+        yield return new WaitForSecondsRealtime(2f);
+        heavyAttack = true;
+        this.GetComponent<Animator>().avatar = DefaultAvatar;
+    }
+
 
     public void BossIsDefeated()
     {
@@ -299,7 +309,7 @@ public class KratusControl : MonoBehaviour {
         {
             this.GetComponents<AudioSource>()[0].Play();
             KratosHealthPoints = MaxHealthPoints;
-            Destroy(collision.gameObject);
+            collision.gameObject.SetActive(false);/// Update it in start method
         }
 
         if (collision.gameObject.CompareTag("ObstacleRoom1Collider"))
@@ -327,6 +337,7 @@ public class KratusControl : MonoBehaviour {
         {
             NormalLevel.GetComponent<NormalLevel>().NormalLevelON = false;
             BossLevel.SetActive(true);
+            BossLevel.GetComponentInChildren<BossLevel>().Start();
             NormalLevel.GetComponent<AudioSource>().outputAudioMixerGroup.audioMixer.SetFloat("NormalLevelVol", -80f); //Normal Level
             BossLevel.GetComponent<AudioSource>().outputAudioMixerGroup.audioMixer.SetFloat("BossLevelVol", SoundManager.MusicVolume); //Boss Level
 

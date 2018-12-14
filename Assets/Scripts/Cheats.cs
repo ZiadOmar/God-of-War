@@ -19,8 +19,6 @@ public class Cheats : MonoBehaviour {
     void Update()
     {
 
-
-
         if (Input.GetKeyDown(KeyCode.Alpha1)) //Fill Health
         {
             Kratos.KratosHealthPoints = Kratos.MaxHealthPoints;
@@ -49,6 +47,7 @@ public class Cheats : MonoBehaviour {
             NormalLevel.Wave1Level.SetActive(true);
             NormalLevel.Wave1 = true;
             Kratos.transform.position = NormalLevel.Wave1LevelStartPosition.transform.position;
+            Kratos.GetComponentInChildren<WeaponAttack>().instNextEnemy = true;
         }
 
         if (Input.GetKeyDown(KeyCode.F2)) //Finish Wave1
@@ -76,6 +75,7 @@ public class Cheats : MonoBehaviour {
             NormalLevel.Wave2 = true;
             Kratos.transform.position = NormalLevel.Wave2LevelStartPosition.transform.position;
             Kratos.GetComponent<Invector.CharacterController.vThirdPersonController>().jumpHeight = 5;
+            Kratos.GetComponentInChildren<WeaponAttack>().instNextEnemy = true;
         }
 
         if (Input.GetKeyDown(KeyCode.F4)) //Finish Wave2
@@ -99,6 +99,7 @@ public class Cheats : MonoBehaviour {
             NormalLevel.Wave3Level.SetActive(true);
             NormalLevel.Wave3 = true;
             Kratos.transform.position = NormalLevel.Wave3LevelStartPosition.transform.position;
+            Kratos.GetComponentInChildren<WeaponAttack>().instNextEnemy = true;
         }
 
         if (Input.GetKeyDown(KeyCode.F6)) //Finish Wave3
@@ -119,17 +120,21 @@ public class Cheats : MonoBehaviour {
         if (Input.GetKeyDown(KeyCode.F7)) //Finish Obstacle Room 4
         {
             BossLevelParent.SetActive(true);
+            BossLevel.GetComponent<BossLevel>().Start();
             NormalLevel.GetComponent<AudioSource>().outputAudioMixerGroup.audioMixer.SetFloat("NormalLevelVol", -80f); //Normal Level
             BossLevelParent.GetComponent<AudioSource>().outputAudioMixerGroup.audioMixer.SetFloat("BossLevelVol", BossLevel.SoundManager.MusicVolume); //Boss Level
             Kratos.transform.position = BossLevel.BossLevelStartPosition.transform.position;
             NormalLevel.NormalLevelON = false;
             Kratos.GetComponent<Invector.CharacterController.vThirdPersonController>().jumpHeight = 5;
+            Kratos.GetComponentInChildren<WeaponAttack>().instNextEnemy = true;
         }
 
         if (Input.GetKeyDown(KeyCode.F8)) //Kill Running Enemy
         {
+           
             if (NormalLevel.Wave1)
             {
+                NormalLevel.Wave1Enemies[Kratos.enemyAttackers].GetComponent<CapsuleCollider>().enabled = false;
                 NormalLevel.Wave1Enemies[Kratos.enemyAttackers].GetComponent<Enemy>().EnemyHealthPoints = 0;
                 NormalLevel.Wave1Enemies[Kratos.enemyAttackers].GetComponent<UnityStandardAssets.Characters.ThirdPerson.ThirdPersonCharacter>().m_MoveSpeedMultiplier = 0;
                 NormalLevel.Wave1Enemies[Kratos.enemyAttackers].GetComponent<UnityStandardAssets.Characters.ThirdPerson.AICharacterControl>().target = null;
@@ -142,9 +147,11 @@ public class Cheats : MonoBehaviour {
                 Kratos.XPIncAndCheckForLevelUp();
                 Kratos.enemyAttackers++;
                 Kratos.GetComponentInChildren<WeaponAttack>().instNextEnemy = true;
+
             }
             else if (NormalLevel.Wave2)
             {
+                NormalLevel.Wave2Enemies[Kratos.enemyAttackers].GetComponent<CapsuleCollider>().enabled = false;
                 NormalLevel.Wave2Enemies[Kratos.enemyAttackers].GetComponent<Enemy>().EnemyHealthPoints = 0;
                 NormalLevel.Wave2Enemies[Kratos.enemyAttackers].GetComponent<UnityStandardAssets.Characters.ThirdPerson.ThirdPersonCharacter>().m_MoveSpeedMultiplier = 0;
                 NormalLevel.Wave2Enemies[Kratos.enemyAttackers].GetComponent<Animator>().SetTrigger("Dying");
@@ -160,6 +167,7 @@ public class Cheats : MonoBehaviour {
 
             else if (NormalLevel.Wave3)
             {
+                NormalLevel.Wave3Enemies[Kratos.enemyAttackers].GetComponent<CapsuleCollider>().enabled = false;
                 NormalLevel.Wave3Enemies[Kratos.enemyAttackers].GetComponent<Enemy>().EnemyHealthPoints = 0;
                 NormalLevel.Wave3Enemies[Kratos.enemyAttackers].GetComponent<UnityStandardAssets.Characters.ThirdPerson.ThirdPersonCharacter>().m_MoveSpeedMultiplier = 0;
                 NormalLevel.Wave3Enemies[Kratos.enemyAttackers].GetComponent<Animator>().SetTrigger("Dying");
@@ -179,6 +187,7 @@ public class Cheats : MonoBehaviour {
         {
             if (NormalLevel.Wave1)
             {
+                NormalLevel.Wave1Enemies[Kratos.enemyAttackers].GetComponent<CapsuleCollider>().enabled = false;
                 NormalLevel.Wave1Enemies[Kratos.enemyAttackers].GetComponent<LongRangeEnemy>().EnemyHealthPoints = 0;
                 NormalLevel.Wave1Enemies[Kratos.enemyAttackers].GetComponent<Animator>().SetTrigger("Dying");
                 NormalLevel.Wave1Enemies[Kratos.enemyAttackers].GetComponent<LongRangeEnemy>().FireManDead = true;
@@ -191,6 +200,7 @@ public class Cheats : MonoBehaviour {
             }
             else if (NormalLevel.Wave2)
             {
+                NormalLevel.Wave2Enemies[Kratos.enemyAttackers].GetComponent<CapsuleCollider>().enabled = false;
                 NormalLevel.Wave2Enemies[Kratos.enemyAttackers].GetComponent<LongRangeEnemy>().EnemyHealthPoints = 0;
                 NormalLevel.Wave2Enemies[Kratos.enemyAttackers].GetComponent<Animator>().SetTrigger("Dying");
                 NormalLevel.Wave2Enemies[Kratos.enemyAttackers].GetComponent<LongRangeEnemy>().FireManDead = true;
@@ -204,6 +214,7 @@ public class Cheats : MonoBehaviour {
 
             else if (NormalLevel.Wave3)
             {
+                NormalLevel.Wave3Enemies[Kratos.enemyAttackers].GetComponent<CapsuleCollider>().enabled = false;
                 NormalLevel.Wave3Enemies[Kratos.enemyAttackers].GetComponent<LongRangeEnemy>().EnemyHealthPoints = 0;
                 NormalLevel.Wave3Enemies[Kratos.enemyAttackers].GetComponent<Animator>().SetTrigger("Dying");
                 NormalLevel.Wave3Enemies[Kratos.enemyAttackers].GetComponent<LongRangeEnemy>().FireManDead = true;
@@ -247,6 +258,7 @@ public class Cheats : MonoBehaviour {
             Kratos.GetComponent<KratusControl>().enemyAttackers = 0;
             NormalLevel.NormalLevelON = false;
             BossLevelParent.SetActive(true);
+            BossLevel.GetComponent<BossLevel>().Start();
             NormalLevel.GetComponent<AudioSource>().outputAudioMixerGroup.audioMixer.SetFloat("NormalLevelVol", -80f); //Normal Level
             BossLevelParent.GetComponent<AudioSource>().outputAudioMixerGroup.audioMixer.SetFloat("BossLevelVol", BossLevel.SoundManager.MusicVolume); //Boss Level
             Kratos.transform.position = BossLevel.BossLevelStartPosition.transform.position;
@@ -290,6 +302,7 @@ public class Cheats : MonoBehaviour {
             BossLevel.gameObject.GetComponent<UnityStandardAssets.Characters.ThirdPerson.AICharacterControl>().target = null;
             //Credits Roll
             Kratos.BossIsDefeated();
+
         }
     }
 }

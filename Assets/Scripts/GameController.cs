@@ -24,10 +24,7 @@ public class GameController : MonoBehaviour {
     Vector3 initialPosition;
 
     //UI Texts
-    public Text KratosHealthPoints;
-    public Text KratosRageLevel;
     public Text KratosCurrentLevel;
-    public Text KratosXP;
     public Text KratosSkillPoints;
     public Text UpgradeKratosSkillPoints;
 
@@ -59,16 +56,16 @@ public class GameController : MonoBehaviour {
         {
             Pause();
         }
-
-        KratosHealthPoints.text = "Health: " + Player.GetComponent<KratusControl>().KratosHealthPoints;
-        KratosRageLevel.text = "Rage: " + Player.GetComponent<KratusControl>().KratosRageLevel;
+   
         KratosCurrentLevel.text = "Level: " + Player.GetComponent<KratusControl>().KratosCurrentLevel;
-        KratosXP.text = "XP: " + Player.GetComponent<KratusControl>().KratosXP;
         KratosSkillPoints.text = "Skill Points: " + Player.GetComponent<KratusControl>().KratosSkillPoints;
         UpgradeKratosSkillPoints.text = "Skill Points: " + Player.GetComponent<KratusControl>().KratosSkillPoints;
 
         if (Player.GetComponent<KratusControl>().BossDefeated)
+        {
             Credits();
+            Player.GetComponent<KratusControl>().BossDefeated = false;
+        }
 
         if (Player.GetComponent<KratusControl>().GameOver)
         {
@@ -98,10 +95,12 @@ public class GameController : MonoBehaviour {
         Player.transform.position = initialPosition;
 
         Player.GetComponent<KratusControl>().GameScreenOn = true;
-        Player.GetComponent<KratusControl>().NormalLevel.SetActive(true);
+        Player.GetComponent<KratusControl>().NormalLevel.SetActive(true);    
         Player.GetComponent<KratusControl>().BossLevel.SetActive(false);
         Player.GetComponent<KratusControl>().NormalLevel.GetComponent<NormalLevel>().Start();
         Player.GetComponent<Animator>().avatar = Player.GetComponent<KratusControl>().DefaultAvatar;
+
+
     }
 
     public void Pause()
@@ -132,11 +131,11 @@ public class GameController : MonoBehaviour {
         Player.GetComponent<Invector.CharacterController.vThirdPersonInput>().enabled = true;
         Player.GetComponent<KratusControl>().GameScreenOn = true;
 
-        if (Player.GetComponent<KratusControl>().NormalLevel.activeInHierarchy)
+        if (Player.GetComponent<KratusControl>().NormalLevel.GetComponent<NormalLevel>().NormalLevelON)
         {
             Player.GetComponent<KratusControl>().NormalLevel.GetComponent<AudioSource>().outputAudioMixerGroup.audioMixer.SetFloat("NormalLevelVol", SoundManager.MusicVolume); //Normal Level
         }
-        else if (Player.GetComponent<KratusControl>().BossLevel.activeInHierarchy)
+        else
         {
             Player.GetComponent<KratusControl>().BossLevel.GetComponent<AudioSource>().outputAudioMixerGroup.audioMixer.SetFloat("BossLevelVol", SoundManager.MusicVolume); //Boss Level
         }
@@ -153,17 +152,18 @@ public class GameController : MonoBehaviour {
         Player.GetComponent<KratusControl>().Start();
         if (Player.GetComponent<KratusControl>().NormalLevel.GetComponent<NormalLevel>().NormalLevelON)
         {
+  
             Player.GetComponent<KratusControl>().NormalLevel.GetComponent<NormalLevel>().Start();
             Player.GetComponent<Animator>().avatar = Player.GetComponent<KratusControl>().DefaultAvatar;
             Player.GetComponent<KratusControl>().NormalLevel.GetComponent<AudioSource>().outputAudioMixerGroup.audioMixer.SetFloat("NormalLevelVol", SoundManager.MusicVolume); //Normal Level
-
         }
         else // Boss Level
         {
-           
+            Player.GetComponent<KratusControl>().BossLevel.transform.GetChild(0).gameObject.SetActive(true);
             Player.GetComponent<KratusControl>().BossLevel.GetComponentInChildren<BossLevel>().Start();
             Player.GetComponent<Animator>().avatar = Player.GetComponent<KratusControl>().DefaultAvatar;
             Player.GetComponent<KratusControl>().BossLevel.GetComponent<AudioSource>().outputAudioMixerGroup.audioMixer.SetFloat("BossLevelVol", SoundManager.MusicVolume); //Boss Level
+
 
         }
         GameOverScreen.SetActive(false);

@@ -8,8 +8,6 @@ public class WeaponAttack : MonoBehaviour {
     public bool instNextEnemy;
     public GameObject Boss;
 
-  
-
     // Use this for initialization
     void Start () {
         instNextEnemy = true;
@@ -45,6 +43,7 @@ public class WeaponAttack : MonoBehaviour {
             if (enemyHealthPoints <= 0)
             {
                 //Destroy(other.gameObject); // Animation Dying
+                other.gameObject.GetComponent<CapsuleCollider>().enabled = false;
                 other.gameObject.GetComponent<Animator>().SetTrigger("Dying");
                 other.gameObject.GetComponent<UnityStandardAssets.Characters.ThirdPerson.ThirdPersonCharacter>().m_MoveSpeedMultiplier = 0;
                 other.gameObject.GetComponent<UnityStandardAssets.Characters.ThirdPerson.AICharacterControl>().target = null;
@@ -60,8 +59,6 @@ public class WeaponAttack : MonoBehaviour {
             other.gameObject.GetComponent<Enemy>().EnemyHealthPoints = enemyHealthPoints;
             Kratos.lightAttack = false;
             Kratos.heavyAttack = false;
-
-            Kratos.GetComponent<Animator>().avatar = Kratos.DefaultAvatar;
         }
 
         // if Sword hit the fire enemy
@@ -84,6 +81,7 @@ public class WeaponAttack : MonoBehaviour {
             if (enemyHealthPoints <= 0)
             {
                 // Animation Dying
+                other.gameObject.GetComponent<CapsuleCollider>().enabled = false;
                 other.gameObject.GetComponent<Animator>().SetTrigger("Dying");
                 other.gameObject.GetComponent<LongRangeEnemy>().FireManDead = true;
                 other.gameObject.GetComponents<AudioSource>()[0].Play(); // Death Sound
