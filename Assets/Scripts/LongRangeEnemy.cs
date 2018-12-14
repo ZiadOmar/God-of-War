@@ -31,7 +31,6 @@ public class LongRangeEnemy : MonoBehaviour
         this.GetComponent<CapsuleCollider>().enabled = true;
         this.GetComponents<AudioSource>()[2].enabled = true;
 
-        this.GetComponent<Animator>().SetTrigger("Restart");
 
         FireManDead = false;
     }

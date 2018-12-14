@@ -18,7 +18,8 @@ public class Cheats : MonoBehaviour {
     // Update is called once per frame
     void Update()
     {
-
+        if (Kratos.GameScreenOn)
+        { 
         if (Input.GetKeyDown(KeyCode.Alpha1)) //Fill Health
         {
             Kratos.KratosHealthPoints = Kratos.MaxHealthPoints;
@@ -127,6 +128,7 @@ public class Cheats : MonoBehaviour {
             NormalLevel.NormalLevelON = false;
             Kratos.GetComponent<Invector.CharacterController.vThirdPersonController>().jumpHeight = 5;
             Kratos.GetComponentInChildren<WeaponAttack>().instNextEnemy = true;
+            i = 1;
         }
 
         if (Input.GetKeyDown(KeyCode.F8)) //Kill Running Enemy
@@ -134,12 +136,12 @@ public class Cheats : MonoBehaviour {
            
             if (NormalLevel.Wave1)
             {
+
                 NormalLevel.Wave1Enemies[Kratos.enemyAttackers].GetComponent<CapsuleCollider>().enabled = false;
                 NormalLevel.Wave1Enemies[Kratos.enemyAttackers].GetComponent<Enemy>().EnemyHealthPoints = 0;
                 NormalLevel.Wave1Enemies[Kratos.enemyAttackers].GetComponent<UnityStandardAssets.Characters.ThirdPerson.ThirdPersonCharacter>().m_MoveSpeedMultiplier = 0;
                 NormalLevel.Wave1Enemies[Kratos.enemyAttackers].GetComponent<UnityStandardAssets.Characters.ThirdPerson.AICharacterControl>().target = null;
                 NormalLevel.Wave1Enemies[Kratos.enemyAttackers].GetComponent<Animator>().SetTrigger("Dying");
-
                 NormalLevel.Wave1Enemies[Kratos.enemyAttackers].GetComponents<AudioSource>()[0].Play(); // Death Sound
                 NormalLevel.Wave1Enemies[Kratos.enemyAttackers].GetComponents<AudioSource>()[2].enabled = false; //Walking
                 NormalLevel.Wave1Enemies[Kratos.enemyAttackers].GetComponents<AudioSource>()[3].enabled = false; //Voice Over
@@ -263,6 +265,7 @@ public class Cheats : MonoBehaviour {
             BossLevelParent.GetComponent<AudioSource>().outputAudioMixerGroup.audioMixer.SetFloat("BossLevelVol", BossLevel.SoundManager.MusicVolume); //Boss Level
             Kratos.transform.position = BossLevel.BossLevelStartPosition.transform.position;
             Kratos.GetComponent<Invector.CharacterController.vThirdPersonController>().jumpHeight = 5;
+            i = 1;
         }
 
             if (Input.GetKeyDown(KeyCode.F11)) //Kill Boss Components
@@ -294,6 +297,7 @@ public class Cheats : MonoBehaviour {
 
         if (Input.GetKeyDown(KeyCode.F12)) //Kill Boss
         {
+            i = 1;
             BossLevel.BossHealthPoints = 0;
             BossLevel.gameObject.GetComponent<Animator>().SetTrigger("Dying");
             BossLevel.gameObject.GetComponents<AudioSource>()[0].Play(); // Death Sound
@@ -304,5 +308,6 @@ public class Cheats : MonoBehaviour {
             Kratos.BossIsDefeated();
 
         }
+    }
     }
 }

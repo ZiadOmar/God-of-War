@@ -39,10 +39,9 @@ public class WeaponAttack : MonoBehaviour {
 
             other.gameObject.GetComponents<AudioSource>()[1].Play(); // Hit Sound
             other.gameObject.GetComponent<Animator>().SetTrigger("Hit Reaction");
-
             if (enemyHealthPoints <= 0)
             {
-                //Destroy(other.gameObject); // Animation Dying
+                // Animation Dying
                 other.gameObject.GetComponent<CapsuleCollider>().enabled = false;
                 other.gameObject.GetComponent<Animator>().SetTrigger("Dying");
                 other.gameObject.GetComponent<UnityStandardAssets.Characters.ThirdPerson.ThirdPersonCharacter>().m_MoveSpeedMultiplier = 0;
@@ -77,7 +76,7 @@ public class WeaponAttack : MonoBehaviour {
             }
             other.gameObject.GetComponents<AudioSource>()[1].Play(); // Hit Sound
             other.gameObject.GetComponent<Animator>().SetTrigger("Hit Reaction");
-
+     
             if (enemyHealthPoints <= 0)
             {
                 // Animation Dying

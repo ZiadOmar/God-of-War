@@ -17,8 +17,11 @@ public class Enemy : MonoBehaviour {
 
     public KratusControl Kratos;
 
+
     // Use this for initialization
     public void Start () {
+      
+
         this.GetComponents<AudioSource>()[2].outputAudioMixerGroup.audioMixer.SetFloat("EnemyWalkVol", SoundManager.SFXVolume); //Walking
         this.GetComponents<AudioSource>()[3].outputAudioMixerGroup.audioMixer.SetFloat("VoiceOverVol", SoundManager.SpeechVolume); //Voice Over
         EnemyHealthPoints = 50;
@@ -27,7 +30,6 @@ public class Enemy : MonoBehaviour {
         this.GetComponent<UnityStandardAssets.Characters.ThirdPerson.ThirdPersonCharacter>().m_MoveSpeedMultiplier = 1;
         this.GetComponent<CapsuleCollider>().enabled = true;
         i = 0;
-
     }
 
     // Update is called once per frame
@@ -58,7 +60,7 @@ public class Enemy : MonoBehaviour {
             {
                 double KratosHealthPoints = other.gameObject.GetComponent<KratusControl>().KratosHealthPoints;
                 if (type == "close_range")
-                    this.gameObject.GetComponent<Animator>().SetTrigger("attack");
+                      this.gameObject.GetComponent<Animator>().SetTrigger("attack");
                 
                 print("attack");
       
@@ -91,4 +93,6 @@ public class Enemy : MonoBehaviour {
             i++;
         } 
     }
+
+  
 }

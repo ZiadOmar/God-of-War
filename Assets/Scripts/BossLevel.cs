@@ -37,7 +37,7 @@ public class BossLevel : MonoBehaviour {
     public GameObject LegShield;
     public GameObject HandShield;
 
-
+    public GameObject fire;
     //Sound
     public Sound SoundManager;
 
@@ -47,7 +47,7 @@ public class BossLevel : MonoBehaviour {
         this.gameObject.transform.parent.gameObject.GetComponent<AudioSource>().outputAudioMixerGroup.audioMixer.SetFloat("BossLevelVol", SoundManager.MusicVolume); //Boss Level
 
         Kratos.transform.position = BossLevelStartPosition.transform.position;
-        //this.gameObject.GetComponent<Animator>().SetFloat("Forward", this.gameObject.GetComponent<NavMeshAgent>().remainingDistance);
+        this.gameObject.GetComponent<Animator>().SetFloat("Forward", this.gameObject.GetComponent<NavMeshAgent>().remainingDistance);
         this.GetComponents<AudioSource>()[2].outputAudioMixerGroup.audioMixer.SetFloat("EnemyWalkVol", SoundManager.SFXVolume); //Walking
         this.GetComponents<AudioSource>()[3].outputAudioMixerGroup.audioMixer.SetFloat("VoiceOverVol", SoundManager.SpeechVolume); //Voice Over
 
@@ -73,21 +73,20 @@ public class BossLevel : MonoBehaviour {
          WeakPoint2 = 0;
          WeakPoint3 = 0;
 
-
-
+        fire.transform.position = new Vector3(this.transform.position.x, -26.61f, this.transform.position.z + 2f);
+        fire.GetComponent<ParticleSystem>().Play();
     }
 	
    // Update is called once per frame
    void Update ()
    {
-       
         HealthPb.Title = "Boss Health: ";
         HealthPb.BarValue = (int)BossHealthPoints;
         HealthPb.MaxValue = (int)BossMaxHealthPoints;
 
         this.gameObject.GetComponent<Animator>().SetFloat("Forward", this.gameObject.GetComponent<NavMeshAgent>().remainingDistance);
         remainingDistance = this.gameObject.GetComponent<NavMeshAgent>().remainingDistance;
-        Debug.Log(remainingDistance);
+
         // 5 Seconds Time
         timer += Time.deltaTime;
         seconds = System.Convert.ToInt32(timer % 60);
@@ -172,8 +171,8 @@ public class BossLevel : MonoBehaviour {
             this.gameObject.GetComponent<Animator>().SetBool("Hand attack", false);
             this.gameObject.GetComponent<Animator>().SetBool("Leg attack", false);
 
-            HeadAttack.GetComponent<BoxCollider>().enabled = false;
-            HandAttack.GetComponent<BoxCollider>().enabled = false;
+            //HeadAttack.GetComponent<BoxCollider>().enabled = false;
+            //HandAttack.GetComponent<BoxCollider>().enabled = false;
             LegAttack.GetComponent<BoxCollider>().enabled = false;
 
             Debug.Log("Attack Chosen:" + RandomAttack);

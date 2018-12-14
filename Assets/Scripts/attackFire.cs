@@ -34,9 +34,9 @@ public class attackFire : MonoBehaviour {
                     }
                     if (KratosHealthPoints <= 0)
                     {
-                //GameOver
-                FightDone = true;
-                other.gameObject.GetComponent<KratusControl>().GameOver = true;
+                       //GameOver
+                        FightDone = true;
+                        other.gameObject.GetComponent<KratusControl>().GameOver = true;
                         other.gameObject.GetComponent<Animator>().avatar = other.gameObject.GetComponent<KratusControl>().DyingAvatar;
                         other.gameObject.GetComponent<Animator>().CrossFadeInFixedTime("Dying", 1f);
                         other.gameObject.GetComponents<AudioSource>()[1].Play();

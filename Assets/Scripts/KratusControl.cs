@@ -253,13 +253,6 @@ public class KratusControl : MonoBehaviour {
 
     }
 
-    //void DoorOpen()
-    //{
-    //    Door.GetComponent<AudioSource>().outputAudioMixerGroup.audioMixer.SetFloat("MasterVol", 20f);
-    //    Door.GetComponent<AudioSource>().outputAudioMixerGroup.audioMixer.SetFloat("DoorVol", -20f);
-    //    Door.GetComponent<AudioSource>().Play();
-    //    StartCoroutine("WaitAWhile");
-    //}
     public void ReturnToDefaultAvatar()
     {
         StartCoroutine("WaitAWhile");
@@ -290,12 +283,15 @@ public class KratusControl : MonoBehaviour {
 
     public void BossIsDefeated()
     {
+        BossLevel.GetComponentInChildren<BossLevel>().HeadAttack.GetComponent<BoxCollider>().enabled = false;
+        BossLevel.GetComponentInChildren<BossLevel>().HandAttack.GetComponent<BoxCollider>().enabled = false;
+        BossLevel.GetComponentInChildren<BossLevel>().LegAttack.GetComponent<BoxCollider>().enabled = false;
         StartCoroutine("Wait");
     }
 
     IEnumerator Wait()
     {
-        yield return new WaitForSecondsRealtime(4f);
+        yield return new WaitForSecondsRealtime(2.5f);
         BossDefeated = true;
         BossLevel.GetComponent<AudioSource>().outputAudioMixerGroup.audioMixer.SetFloat("BossLevelVol", -80f); //Boss Level
 

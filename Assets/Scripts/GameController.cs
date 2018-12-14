@@ -17,6 +17,8 @@ public class GameController : MonoBehaviour {
     public GameObject AudioMenu;
     public GameObject HowToPlayMenu;
     public GameObject CreditsMenu;
+    public GameObject CreditsMenuBack;
+    public GameObject CreditsMenuExit;
 
 
     //Objects
@@ -64,7 +66,10 @@ public class GameController : MonoBehaviour {
         if (Player.GetComponent<KratusControl>().BossDefeated)
         {
             Credits();
+            CreditsMenuExit.SetActive(true);
+            CreditsMenuBack.SetActive(false);
             Player.GetComponent<KratusControl>().BossDefeated = false;
+            this.GetComponent<AudioSource>().outputAudioMixerGroup.audioMixer.SetFloat("MenuVol", SoundManager.MusicVolume);
         }
 
         if (Player.GetComponent<KratusControl>().GameOver)
@@ -144,11 +149,12 @@ public class GameController : MonoBehaviour {
 
     public void RestartLevel()
     {
+       
         Player.SetActive(true);
         Player.GetComponent<Invector.CharacterController.vThirdPersonController>().enabled = true;
         Player.GetComponent<Invector.CharacterController.vThirdPersonInput>().enabled = true;
         this.GetComponent<AudioSource>().outputAudioMixerGroup.audioMixer.SetFloat("MenuVol", -80f);
-
+        
         Player.GetComponent<KratusControl>().Start();
         if (Player.GetComponent<KratusControl>().NormalLevel.GetComponent<NormalLevel>().NormalLevelON)
         {
@@ -198,6 +204,8 @@ public class GameController : MonoBehaviour {
         MainMenu.SetActive(false);
         GameScreen.SetActive(false);
         Options.SetActive(false);
+        CreditsMenuExit.SetActive(false);
+        CreditsMenuBack.SetActive(true);
         CreditsMenu.SetActive(true);
     }
 
